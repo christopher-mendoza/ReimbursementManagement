@@ -1,1 +1,4 @@
 /target/
+connection.properties
+*.log
+*.sql
