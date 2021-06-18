@@ -24,8 +24,10 @@ public class JDBCConnection {
 				String url = props.getProperty("url");
 				String username = props.getProperty("username");
 				String password = props.getProperty("password");
+				String currentSchema = props.getProperty("currentSchema");
 				
 				conn = DriverManager.getConnection(url, username, password);
+				conn.setSchema(currentSchema);
 				return conn;
 			}
 			else {
@@ -37,4 +39,5 @@ public class JDBCConnection {
 		}
 		return null;
 	}
+	
 }
