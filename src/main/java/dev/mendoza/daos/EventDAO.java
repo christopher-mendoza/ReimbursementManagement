@@ -2,10 +2,13 @@ package dev.mendoza.daos;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import dev.mendoza.models.Event;
+import dev.mendoza.models.EventType;
 import dev.mendoza.utils.JDBCConnection;
 
 /*
@@ -38,5 +41,39 @@ public class EventDAO {
 			ex.printStackTrace();
 		}
 		return false;
+	}
+	
+	public Event getEventById(Integer id) {
+		String sql = "SELECT * FROM events JOIN event_types " +
+					 "ON e_type = event_type_id " +
+					 "WHERE event_id = ?;";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			// Checks if ResultSet returns nothing (bad input)
+			if(!rs.isBeforeFirst()) {
+				return null;
+			}
+			if(rs.next()) {
+				Event e = new Event();
+				e.setId(rs.getInt("event_id"));
+				e.setEventDate(rs.getTimestamp("event_date"));
+				e.setEventLocation(rs.getString("event_location"));
+				e.setEventDesc(rs.getString("event_description"));
+				e.setEventCost(rs.getFloat("event_cost"));
+				// Add EventType Object
+				EventType eType = new EventType();
+				eType.setId(rs.getInt("event_type_id"));
+				eType.setType(rs.getString("event_type"));
+				eType.setCoverage(rs.getFloat("event_coverage"));
+				e.setEventType(eType);
+				return e;
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
