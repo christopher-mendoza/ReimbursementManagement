@@ -8,13 +8,13 @@ public class Event {
 	private String eventLocation;
 	private String eventDesc;
 	private Float eventCost;
-	private String eventType;
+	private EventType eventType;
 	
 	public Event() {
 		super();
 	}
 
-	public Event(Timestamp eventDate, String eventLocation, String eventDesc, Float eventCost, String eventType) {
+	public Event(Timestamp eventDate, String eventLocation, String eventDesc, Float eventCost, EventType eventType) {
 		super();
 		this.eventDate = eventDate;
 		this.eventLocation = eventLocation;
@@ -24,7 +24,7 @@ public class Event {
 	}
 
 	public Event(Integer id, Timestamp eventDate, String eventLocation, String eventDesc, Float eventCost,
-			String eventType) {
+			EventType eventType) {
 		super();
 		this.id = id;
 		this.eventDate = eventDate;
@@ -74,11 +74,11 @@ public class Event {
 		this.eventCost = eventCost;
 	}
 
-	public String getEventType() {
+	public EventType getEventType() {
 		return eventType;
 	}
 
-	public void setEventType(String eventType) {
+	public void setEventType(EventType eventType) {
 		this.eventType = eventType;
 	}
 

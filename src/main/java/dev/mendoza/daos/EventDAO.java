@@ -29,7 +29,7 @@ public class EventDAO {
 			cs.setString(2, e.getEventLocation());
 			cs.setString(3,  e.getEventDesc());
 			cs.setFloat(4,  e.getEventCost());
-			cs.setString(5, e.getEventType());
+			cs.setInt(5, e.getEventType().getId());
 			cs.execute();
 			cs.close();
 			return true;
