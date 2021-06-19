@@ -3,7 +3,6 @@ package dev.mendoza.models;
 public class DSApproval {
 	private Integer id;
 	private String name;
-	private String request;
 	private String reason;
 	private Boolean approve;
 	
@@ -17,19 +16,17 @@ public class DSApproval {
 		this.approve = approve;
 	}
 	
-	public DSApproval(String name, String request, String reason, Boolean approve) {
+	public DSApproval(String name, String reason, Boolean approve) {
 		super();
 		this.name = name;
-		this.request = request;
 		this.reason = reason;
 		this.approve = approve;
 	}
 
-	public DSApproval(Integer id, String name, String request, String reason, Boolean approve) {
+	public DSApproval(Integer id, String name, String reason, Boolean approve) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.request = request;
 		this.reason = reason;
 		this.approve = approve;
 	}
@@ -48,14 +45,6 @@ public class DSApproval {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getRequest() {
-		return request;
-	}
-
-	public void setRequest(String request) {
-		this.request = request;
 	}
 
 	public String getReason() {
@@ -82,7 +71,6 @@ public class DSApproval {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((reason == null) ? 0 : reason.hashCode());
-		result = prime * result + ((request == null) ? 0 : request.hashCode());
 		return result;
 	}
 
@@ -115,19 +103,14 @@ public class DSApproval {
 				return false;
 		} else if (!reason.equals(other.reason))
 			return false;
-		if (request == null) {
-			if (other.request != null)
-				return false;
-		} else if (!request.equals(other.request))
-			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "DSApproval [id=" + id + ", name=" + name + ", request=" + request + ", reason=" + reason + ", approve="
-				+ approve + "]";
+		return "DSApproval [id=" + id + ", name=" + name + ", reason=" + reason + ", approve=" + approve + "]";
 	}
+	
 	
 	
 }

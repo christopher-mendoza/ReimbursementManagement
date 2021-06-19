@@ -3,7 +3,6 @@ package dev.mendoza.models;
 public class DHApproval {
 	private Integer id;
 	private String name;
-	private String request;
 	private Boolean approve;
 	
 	public DHApproval() {
@@ -19,7 +18,6 @@ public class DHApproval {
 	public DHApproval(String name, String request, Boolean approve) {
 		super();
 		this.name = name;
-		this.request = request;
 		this.approve = approve;
 	}
 
@@ -27,7 +25,6 @@ public class DHApproval {
 		super();
 		this.id = id;
 		this.name = name;
-		this.request = request;
 		this.approve = approve;
 	}
 
@@ -47,14 +44,6 @@ public class DHApproval {
 		this.name = name;
 	}
 
-	public String getRequest() {
-		return request;
-	}
-
-	public void setRequest(String request) {
-		this.request = request;
-	}
-
 	public Boolean getApprove() {
 		return approve;
 	}
@@ -70,7 +59,6 @@ public class DHApproval {
 		result = prime * result + ((approve == null) ? 0 : approve.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((request == null) ? 0 : request.hashCode());
 		return result;
 	}
 
@@ -98,18 +86,13 @@ public class DHApproval {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (request == null) {
-			if (other.request != null)
-				return false;
-		} else if (!request.equals(other.request))
-			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "DHApproval [id=" + id + ", name=" + name + ", request=" + request + ", approve=" + approve + "]";
+		return "DHApproval [id=" + id + ", name=" + name + ", approve=" + approve + "]";
 	}
-	
+
 	
 }

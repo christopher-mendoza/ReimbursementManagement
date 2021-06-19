@@ -3,7 +3,6 @@ package dev.mendoza.models;
 public class BCApproval {
 	private Integer id;
 	private String name;
-	private String request;
 	private String reason;
 	private Boolean approve;
 	
@@ -17,19 +16,17 @@ public class BCApproval {
 		this.approve = approve;
 	}
 
-	public BCApproval(String name, String request, String reason, Boolean approve) {
+	public BCApproval(String name, String reason, Boolean approve) {
 		super();
 		this.name = name;
-		this.request = request;
 		this.reason = reason;
 		this.approve = approve;
 	}
 
-	public BCApproval(Integer id, String name, String request, String reason, Boolean approve) {
+	public BCApproval(Integer id, String name, String reason, Boolean approve) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.request = request;
 		this.reason = reason;
 		this.approve = approve;
 	}
@@ -49,15 +46,6 @@ public class BCApproval {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public String getRequest() {
-		return request;
-	}
-
-	public void setRequest(String request) {
-		this.request = request;
-	}
-
 	public String getReason() {
 		return reason;
 	}
@@ -82,7 +70,6 @@ public class BCApproval {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((reason == null) ? 0 : reason.hashCode());
-		result = prime * result + ((request == null) ? 0 : request.hashCode());
 		return result;
 	}
 
@@ -115,19 +102,13 @@ public class BCApproval {
 				return false;
 		} else if (!reason.equals(other.reason))
 			return false;
-		if (request == null) {
-			if (other.request != null)
-				return false;
-		} else if (!request.equals(other.request))
-			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "BCApproval [id=" + id + ", name=" + name + ", request=" + request + ", reason=" + reason + ", approve="
-				+ approve + "]";
+		return "BCApproval [id=" + id + ", name=" + name + ", reason=" + reason + ", approve=" + approve + "]";
 	}
-	
+
 	
 }
