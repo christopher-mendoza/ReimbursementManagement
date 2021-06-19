@@ -18,9 +18,10 @@ public class User {
 		super();
 	}
 
-	public User(Integer id, String name, String username, String password, Float reAmount, Timestamp reTimer) {
+	public User(Integer id, Department department, String name, String username, String password, Float reAmount, Timestamp reTimer) {
 		super();
 		this.id = id;
+		this.department = department;
 		this.name = name;
 		this.username = username;
 		this.password = password;
@@ -28,8 +29,9 @@ public class User {
 		this.reTimer = reTimer;
 	}
 
-	public User(String name, String username, String password, Float reAmount, Timestamp reTimer) {
+	public User(Department department, String name, String username, String password, Float reAmount, Timestamp reTimer) {
 		super();
+		this.department = department;
 		this.name = name;
 		this.username = username;
 		this.password = password;
@@ -122,6 +124,7 @@ public class User {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((bcAdmin == null) ? 0 : bcAdmin.hashCode());
+		result = prime * result + ((department == null) ? 0 : department.hashCode());
 		result = prime * result + ((dhAdmin == null) ? 0 : dhAdmin.hashCode());
 		result = prime * result + ((dsAdmin == null) ? 0 : dsAdmin.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -146,6 +149,11 @@ public class User {
 			if (other.bcAdmin != null)
 				return false;
 		} else if (!bcAdmin.equals(other.bcAdmin))
+			return false;
+		if (department == null) {
+			if (other.department != null)
+				return false;
+		} else if (!department.equals(other.department))
 			return false;
 		if (dhAdmin == null) {
 			if (other.dhAdmin != null)
@@ -192,10 +200,11 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", username=" + username + ", password=" + password + ", reAmount="
-				+ reAmount + ", reTimer=" + reTimer + ", dsAdmin=" + dsAdmin + ", dhAdmin=" + dhAdmin + ", bcAdmin="
-				+ bcAdmin + "]";
+		return "User [id=" + id + ", department=" + department + ", name=" + name + ", username=" + username
+				+ ", password=" + password + ", reAmount=" + reAmount + ", reTimer=" + reTimer + ", dsAdmin=" + dsAdmin
+				+ ", dhAdmin=" + dhAdmin + ", bcAdmin=" + bcAdmin + "]";
 	}
+	
 	
 	
 	
