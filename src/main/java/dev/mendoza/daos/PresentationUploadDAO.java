@@ -58,4 +58,21 @@ public class PresentationUploadDAO {
 		}
 		return null;
 	}
+	
+	public boolean changePresUpload(PresentationUpload p, byte[] upload) {
+		String sql = "UPDATE presentation_uploads SET presentation_up = ? " +
+					 "WHERE presentation_upload_id = ?;";
+		try {
+			CallableStatement cs = conn.prepareCall(sql);
+			cs.setBytes(1, upload);
+			cs.setInt(2, p.getId());
+			cs.execute();
+			cs.close();
+			return true;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

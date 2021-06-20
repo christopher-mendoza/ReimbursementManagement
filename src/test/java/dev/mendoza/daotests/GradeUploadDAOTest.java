@@ -22,4 +22,16 @@ public class GradeUploadDAOTest {
 	public void getGradeUploadByIdTest() {
 		System.out.println(gdao.getGradeUploadById(1));
 	}
+	
+	@Test @Ignore
+	public void changeGradeFormatTest() {
+		GradeUpload g = new GradeUpload(1, "Letter Grading", "A");
+		assertEquals(true, gdao.changeGradeFormat(g, "No Letters, Only Numbers"));
+	}
+	
+	@Test @Ignore
+	public void changeGradeUploadTest() {
+		GradeUpload g = new GradeUpload(1, "Letter Grading", "A");
+		assertEquals(true, gdao.changeGradeUpload(g, "F"));
+	}
 }

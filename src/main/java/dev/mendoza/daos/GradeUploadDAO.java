@@ -58,4 +58,38 @@ public class GradeUploadDAO {
 		}
 		return null;
 	}
+	
+	public boolean changeGradeFormat(GradeUpload g, String format) {
+		String sql = "UPDATE grade_uploads SET grade_upload_format = ? " +
+					 "WHERE grade_upload_id = ?;";
+		try {
+			CallableStatement cs = conn.prepareCall(sql);
+			cs.setString(1, format);
+			cs.setInt(2, g.getId());
+			cs.execute();
+			cs.close();
+			return true;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean changeGradeUpload(GradeUpload g, String grade) {
+		String sql = "UPDATE grade_uploads SET grade_up = ? " + 
+					 "WHERE grade_upload_id = ?;";
+		try {
+			CallableStatement cs = conn.prepareCall(sql);
+			cs.setString(1, grade);
+			cs.setInt(2, g.getId());
+			cs.execute();
+			cs.close();
+			return true;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

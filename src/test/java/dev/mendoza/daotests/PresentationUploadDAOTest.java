@@ -22,4 +22,10 @@ public class PresentationUploadDAOTest {
 	public void getPresUploadByIdTest() {
 		System.out.println(pdao.getPresUploadById(2));
 	}
+	
+	@Test
+	public void changePresUploadTest() {
+		PresentationUpload p = new PresentationUpload(1, null);
+		assertEquals(true, pdao.changePresUpload(p, "only gamers can see this".getBytes()));
+	}
 }
