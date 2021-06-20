@@ -1,27 +1,25 @@
 package dev.mendoza.models;
 
 import java.io.File;
+import java.util.Arrays;
 
 public class PresentationUpload {
 	private Integer id;
-	private File presUp;
-	private Boolean approve;
+	private byte[] presUp;
 	
 	public PresentationUpload() {
 		super();
 	}
 
-	public PresentationUpload(File presUp, Boolean approve) {
+	public PresentationUpload(byte[] presUp) {
 		super();
 		this.presUp = presUp;
-		this.approve = approve;
 	}
 
-	public PresentationUpload(Integer id, File presUp, Boolean approve) {
+	public PresentationUpload(Integer id, byte[] presUp) {
 		super();
 		this.id = id;
 		this.presUp = presUp;
-		this.approve = approve;
 	}
 
 	public Integer getId() {
@@ -32,28 +30,20 @@ public class PresentationUpload {
 		this.id = id;
 	}
 
-	public File getPresUp() {
+	public byte[] getPresUp() {
 		return presUp;
 	}
 
-	public void setPresUp(File presUp) {
+	public void setPresUp(byte[] presUp) {
 		this.presUp = presUp;
-	}
-
-	public Boolean getApprove() {
-		return approve;
-	}
-
-	public void setApprove(Boolean approve) {
-		this.approve = approve;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((approve == null) ? 0 : approve.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + Arrays.hashCode(presUp);
 		return result;
 	}
 
@@ -66,23 +56,21 @@ public class PresentationUpload {
 		if (getClass() != obj.getClass())
 			return false;
 		PresentationUpload other = (PresentationUpload) obj;
-		if (approve == null) {
-			if (other.approve != null)
-				return false;
-		} else if (!approve.equals(other.approve))
-			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
+			return false;
+		if (!Arrays.equals(presUp, other.presUp))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "PresentationUpload [id=" + id + ", approve=" + approve + "]";
+		return "PresentationUpload [id=" + id + ", presUp=" + Arrays.toString(presUp) + "]";
 	}
+	
 	
 	
 }

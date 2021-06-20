@@ -18,7 +18,7 @@ public class GradeUploadDAOTest {
 		assertEquals(true, gdao.addGradeUpload(g));
 	}
 	
-	@Test
+	@Test @Ignore
 	public void getGradeUploadByIdTest() {
 		System.out.println(gdao.getGradeUploadById(1));
 	}
