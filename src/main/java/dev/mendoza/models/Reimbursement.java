@@ -15,6 +15,7 @@ public class Reimbursement {
 	private String username;
 	private Event event;
 	private String workJust;
+	private GradingFormat gradingFormat;
 	private DSApproval dsApproval;
 	private DHApproval dhApproval;
 	private BCApproval bcApproval;
@@ -85,6 +86,14 @@ public class Reimbursement {
 	public void setWorkJust(String workJust) {
 		this.workJust = workJust;
 	}
+	
+	public GradingFormat getGradingFormat() {
+		return gradingFormat;
+	}
+
+	public void setGradingFormat(GradingFormat gradingFormat) {
+		this.gradingFormat = gradingFormat;
+	}
 
 	public DSApproval getDsApproval() {
 		return dsApproval;
@@ -152,6 +161,7 @@ public class Reimbursement {
 		result = prime * result + ((event == null) ? 0 : event.hashCode());
 		result = prime * result + ((fullApprove == null) ? 0 : fullApprove.hashCode());
 		result = prime * result + ((gUp == null) ? 0 : gUp.hashCode());
+		result = prime * result + ((gradingFormat == null) ? 0 : gradingFormat.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((missedWork == null) ? 0 : missedWork.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
@@ -200,6 +210,11 @@ public class Reimbursement {
 				return false;
 		} else if (!gUp.equals(other.gUp))
 			return false;
+		if (gradingFormat == null) {
+			if (other.gradingFormat != null)
+				return false;
+		} else if (!gradingFormat.equals(other.gradingFormat))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -236,10 +251,11 @@ public class Reimbursement {
 	@Override
 	public String toString() {
 		return "Reimbursement [id=" + id + ", name=" + name + ", username=" + username + ", event=" + event
-				+ ", workJust=" + workJust + ", dsApproval=" + dsApproval + ", dhApproval=" + dhApproval
-				+ ", bcApproval=" + bcApproval + ", fullApprove=" + fullApprove + ", missedWork=" + missedWork
-				+ ", gUp=" + gUp + ", pUp=" + pUp + "]";
+				+ ", workJust=" + workJust + ", gradingFormat=" + gradingFormat + ", dsApproval=" + dsApproval
+				+ ", dhApproval=" + dhApproval + ", bcApproval=" + bcApproval + ", fullApprove=" + fullApprove
+				+ ", missedWork=" + missedWork + ", gUp=" + gUp + ", pUp=" + pUp + "]";
 	}
+
 	
 	
 }
