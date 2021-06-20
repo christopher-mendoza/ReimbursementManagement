@@ -15,13 +15,8 @@ public class DHApproval {
 		this.approve = approve;
 	}
 
-	public DHApproval(String name, String request, Boolean approve) {
-		super();
-		this.name = name;
-		this.approve = approve;
-	}
 
-	public DHApproval(Integer id, String name, String request, Boolean approve) {
+	public DHApproval(Integer id, String name, Boolean approve) {
 		super();
 		this.id = id;
 		this.name = name;

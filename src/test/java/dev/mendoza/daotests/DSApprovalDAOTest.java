@@ -14,7 +14,7 @@ public class DSApprovalDAOTest {
 	
 	@Test @Ignore
 	public void addDSApprovalTest() {
-		DSApproval a = new DSApproval("ghostsuper", "needs more info", false);
+		DSApproval a = new DSApproval("ghostsuper", "wut", false);
 		assertEquals(true, adao.addDSApproval(a));
 	}
 
