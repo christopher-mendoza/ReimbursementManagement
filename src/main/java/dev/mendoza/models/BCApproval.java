@@ -5,6 +5,7 @@ public class BCApproval {
 	private String name;
 	private String reason;
 	private Boolean approve;
+	private Boolean exceed;
 	
 	public BCApproval() {
 		super();
@@ -53,7 +54,7 @@ public class BCApproval {
 	public void setReason(String reason) {
 		this.reason = reason;
 	}
-
+	
 	public Boolean getApprove() {
 		return approve;
 	}
@@ -61,12 +62,21 @@ public class BCApproval {
 	public void setApprove(Boolean approve) {
 		this.approve = approve;
 	}
+	
+	public Boolean getExceed() {
+		return exceed;
+	}
+
+	public void setExceed(Boolean exceed) {
+		this.exceed = exceed;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((approve == null) ? 0 : approve.hashCode());
+		result = prime * result + ((exceed == null) ? 0 : exceed.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((reason == null) ? 0 : reason.hashCode());
@@ -86,6 +96,11 @@ public class BCApproval {
 			if (other.approve != null)
 				return false;
 		} else if (!approve.equals(other.approve))
+			return false;
+		if (exceed == null) {
+			if (other.exceed != null)
+				return false;
+		} else if (!exceed.equals(other.exceed))
 			return false;
 		if (id == null) {
 			if (other.id != null)
@@ -107,8 +122,9 @@ public class BCApproval {
 
 	@Override
 	public String toString() {
-		return "BCApproval [id=" + id + ", name=" + name + ", reason=" + reason + ", approve=" + approve + "]";
+		return "BCApproval [id=" + id + ", name=" + name + ", reason=" + reason + ", exceed=" + exceed + ", approve="
+				+ approve + "]";
 	}
-
+	
 	
 }
