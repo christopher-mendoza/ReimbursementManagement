@@ -151,7 +151,7 @@ public class UserDAO {
 	}
 	
 	public boolean changeReimbursementAmt(User u, float newAmt) {
-		String sql = "UPDATE users SET reim_amount = ?" +
+		String sql = "UPDATE users SET reim_amount = ? " +
 					 "WHERE u_username = ?;";
 		try {
 			CallableStatement cs = conn.prepareCall(sql);
