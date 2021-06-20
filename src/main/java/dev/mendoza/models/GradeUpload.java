@@ -2,24 +2,24 @@ package dev.mendoza.models;
 
 public class GradeUpload {
 	private Integer id;
+	private String gradeFormat;
 	private String gradeUp;
-	private Boolean approve;
 	
 	public GradeUpload() {
 		super();
 	}
 
-	public GradeUpload(String gradeUp, Boolean approve) {
+	public GradeUpload(String gradeFormat, String gradeUp) {
 		super();
+		this.gradeFormat = gradeFormat;
 		this.gradeUp = gradeUp;
-		this.approve = approve;
 	}
-
-	public GradeUpload(Integer id, String gradeUp, Boolean approve) {
+	
+	public GradeUpload(Integer id, String gradeFormat, String gradeUp) {
 		super();
 		this.id = id;
+		this.gradeFormat = gradeFormat;
 		this.gradeUp = gradeUp;
-		this.approve = approve;
 	}
 
 	public Integer getId() {
@@ -30,6 +30,15 @@ public class GradeUpload {
 		this.id = id;
 	}
 
+	public String getGradeFormat() {
+		return gradeFormat;
+	}
+
+
+	public void setGradeFormat(String gradeFormat) {
+		this.gradeFormat = gradeFormat;
+	}
+
 	public String getGradeUp() {
 		return gradeUp;
 	}
@@ -38,19 +47,11 @@ public class GradeUpload {
 		this.gradeUp = gradeUp;
 	}
 
-	public Boolean getApprove() {
-		return approve;
-	}
-
-	public void setApprove(Boolean approve) {
-		this.approve = approve;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((approve == null) ? 0 : approve.hashCode());
+		result = prime * result + ((gradeFormat == null) ? 0 : gradeFormat.hashCode());
 		result = prime * result + ((gradeUp == null) ? 0 : gradeUp.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
@@ -65,10 +66,10 @@ public class GradeUpload {
 		if (getClass() != obj.getClass())
 			return false;
 		GradeUpload other = (GradeUpload) obj;
-		if (approve == null) {
-			if (other.approve != null)
+		if (gradeFormat == null) {
+			if (other.gradeFormat != null)
 				return false;
-		} else if (!approve.equals(other.approve))
+		} else if (!gradeFormat.equals(other.gradeFormat))
 			return false;
 		if (gradeUp == null) {
 			if (other.gradeUp != null)
@@ -85,8 +86,9 @@ public class GradeUpload {
 
 	@Override
 	public String toString() {
-		return "GradeUpload [id=" + id + ", gradeUp=" + gradeUp + ", approve=" + approve + "]";
+		return "GradeUpload [id=" + id + ", gradeFormat=" + gradeFormat + ", gradeUp=" + gradeUp + "]";
 	}
+	
 	
 	
 }
