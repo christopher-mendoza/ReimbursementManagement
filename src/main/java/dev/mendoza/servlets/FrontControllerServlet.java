@@ -72,19 +72,31 @@ public class FrontControllerServlet extends HttpServlet {
 		response.setHeader("Content-Type", "application/json");
 		HttpSession session = request.getSession();
 		switch(uri) {
-			case "/ReimbursementManagement/adminlogin": {
+			case "/ReimbursementManagement/login": {
 				System.out.println("Got admin login");
 				LoginAttempt login = this.gson.fromJson(request.getReader(), LoginAttempt.class);
 				UserServiceImpl us = new UserServiceImpl();
 				User u = us.getUserByUsername(login.un);
-				if((u != null && u.getPassword().equals(login.pw))
-						&& (u.getBcAdmin()) || u.getDhAdmin() || u.getDsAdmin()) {
-					System.out.println(u.getUsername() + " " + u.getPassword());
-					System.out.println(login.un + " " + login.pw);
+				if(u == null) {
+					System.out.println("Failed admin login attempt.");
+					break;
+				}
+				if(u.getUsername().equals(login.un) && u.getPassword().equals(login.pw)) {
 					System.out.println("Admin " + u.getName() + " has logged in.");
+					System.out.println(login.un + " " + login.pw);
+					System.out.println(u.getUsername() + " " + u.getPassword());
+					if(u.getBcAdmin() || u.getDhAdmin() || u.getDsAdmin()) {
+						session.setAttribute("currentUser", u);
 					
-					session.setAttribute("currentUser", u);
-					response.getWriter().append("index.html");
+						response.getWriter().append("index.html");
+					}
+					else {
+						System.out.println("not admin");
+						response.getWriter().append("index.html");
+					}
+				}
+				else {
+					System.out.println("Failed admin login attempt.");
 				}
 				break;
 			}
