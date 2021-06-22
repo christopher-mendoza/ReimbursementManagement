@@ -77,8 +77,12 @@ public class FrontControllerServlet extends HttpServlet {
 				LoginAttempt login = this.gson.fromJson(request.getReader(), LoginAttempt.class);
 				UserServiceImpl us = new UserServiceImpl();
 				User u = us.getUserByUsername(login.un);
-				if(u != null) {
+				if((u != null && u.getPassword().equals(login.pw))
+						&& (u.getBcAdmin()) || u.getDhAdmin() || u.getDsAdmin()) {
+					System.out.println(u.getUsername() + " " + u.getPassword());
+					System.out.println(login.un + " " + login.pw);
 					System.out.println("Admin " + u.getName() + " has logged in.");
+					
 					session.setAttribute("currentUser", u);
 					response.getWriter().append("index.html");
 				}
@@ -86,7 +90,6 @@ public class FrontControllerServlet extends HttpServlet {
 			}
 			default: {
 				System.out.println("Default POST Case.");
-				System.out.println(uri);
 				response.sendError(418, "BRB Making tea.");
 				break;
 			}

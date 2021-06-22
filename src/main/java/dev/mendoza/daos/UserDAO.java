@@ -75,6 +75,9 @@ public class UserDAO {
 				u.setPassword(rs.getString("password"));
 				u.setReAmount(rs.getFloat("reim_amount"));
 				u.setReTimer(rs.getTimestamp("reim_timer"));
+				u.setBcAdmin(rs.getBoolean("bc_admin"));
+				u.setDsAdmin(rs.getBoolean("ds_admin"));
+				u.setDhAdmin(rs.getBoolean("dh_admin"));
 				return u;
 			}
 		}
@@ -108,6 +111,9 @@ public class UserDAO {
 				u.setPassword(rs.getString("password"));
 				u.setReAmount(rs.getFloat("reim_amount"));
 				u.setReTimer(rs.getTimestamp("reim_timer"));
+				u.setBcAdmin(rs.getBoolean("bc_admin"));
+				u.setDsAdmin(rs.getBoolean("ds_admin"));
+				u.setDhAdmin(rs.getBoolean("dh_admin"));
 				users.add(u);
 			}
 			return users;
@@ -140,6 +146,9 @@ public class UserDAO {
 				u.setPassword(rs.getString("password"));
 				u.setReAmount(rs.getFloat("reim_amount"));
 				u.setReTimer(rs.getTimestamp("reim_timer"));
+				u.setBcAdmin(rs.getBoolean("bc_admin"));
+				u.setDsAdmin(rs.getBoolean("ds_admin"));
+				u.setDhAdmin(rs.getBoolean("dh_admin"));
 				users.add(u);
 			}
 			return users;
