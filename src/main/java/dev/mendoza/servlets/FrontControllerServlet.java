@@ -88,16 +88,23 @@ public class FrontControllerServlet extends HttpServlet {
 					if(u.getBcAdmin() || u.getDhAdmin() || u.getDsAdmin()) {
 						session.setAttribute("currentUser", u);
 					
-						response.getWriter().append("index.html");
+						response.getWriter().append("admin.html");
 					}
 					else {
-						System.out.println("not admin");
-						response.getWriter().append("index.html");
+						session.setAttribute("currentUser", u);
+						response.getWriter().append("user.html");
 					}
 				}
 				else {
 					System.out.println("Failed admin login attempt.");
 				}
+				break;
+			}
+			case "/ReimbursementManagement/logout": {
+				Object currentUser = session.getAttribute("currentUser");
+				System.out.println("Logging out.");
+				response.getWriter().append("login.html");
+				session.invalidate();
 				break;
 			}
 			default: {

@@ -1,7 +1,6 @@
 const url = 'http://localhost:8080/ReimbursementManagement';
 
 let loginbtn = document.getElementById('loginbtn');
-let radiobtn = document.getElementsByName('type');
 loginbtn.addEventListener('click', loginFunction);
 
 function loginFunction() {
@@ -12,12 +11,6 @@ function loginFunction() {
         pw: passwordValue
     };
 
-    var type = null;
-    for(i = 0; i < radiobtn.length; i++) {
-        if(radiobtn[i].checked) {
-            type = radiobtn[i].value;
-        }
-    }
     if(usernameValue == '') {
         alert('Need a username!');
     }
