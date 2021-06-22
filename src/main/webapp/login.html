@@ -8,11 +8,15 @@
     </head>
 
     <body>
+        
+
+            Username: <input type="text" id="username"/><br>
+            Password: <input type="password" id="password"/><br>
+            <input type="radio" id="user" name="type" value="User">
+            <label for="user">User</label>
+            <input type="radio" id="admin" name="type" value="Administration">
+            <label for="admin">Administration</label><br>
+            <button type="button" id="loginbtn" value="Login">Login</button>
         <script src="login.js"></script>
-        <form name="loginForm" method="POST" action="loginServlet">
-            Username: <input type="text" name="username"/><br>
-            Password: <input type="password" name="password"/><br>
-            <input type="button" value="Login"/>
-        </form>
     </body>
 </html>
