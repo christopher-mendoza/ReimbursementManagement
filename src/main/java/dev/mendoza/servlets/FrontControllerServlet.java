@@ -95,6 +95,7 @@ public class FrontControllerServlet extends HttpServlet {
 					for(int i = 0; i < l.size(); i++) {
 						if((l.get(i).getBcApproval().getApprove() == true)) {
 							l.remove(i);
+							i = 0;
 						}
 					}
 				}
@@ -105,6 +106,7 @@ public class FrontControllerServlet extends HttpServlet {
 						if((!l.get(i).getDhApproval().getName().equals(u.getUsername())) 
 								|| (l.get(i).getDhApproval().getApprove() == true)) {
 							l.remove(i);
+							i = 0;
 						}
 					}
 				}
@@ -112,9 +114,10 @@ public class FrontControllerServlet extends HttpServlet {
 				// Direct Supervisor List
 				else if(u.getDsAdmin() == true) {
 					for(int i = 0; i < l.size(); i++) {
-						if((!l.get(i).getBcApproval().getName().equals(u.getUsername())) 
+						if((!l.get(i).getDsApproval().getName().equals(u.getUsername())) 
 								|| (l.get(i).getDsApproval().getApprove() == true)) {
 							l.remove(i);
+							i = 0;
 						}
 					}
 				}
@@ -163,6 +166,7 @@ public class FrontControllerServlet extends HttpServlet {
 				for(int i = 0; i < l.size(); i++) {
 					if(!l.get(i).getUsername().equals(u.getUsername())) {
 						l.remove(i);
+						i = 0;
 					}
 				}
 				rd.list = l;
@@ -205,7 +209,6 @@ public class FrontControllerServlet extends HttpServlet {
 				List<Event> eList = es.getAllEvents();
 				e = es.getLatestEvent(eList);
 				r.setEvent(e);
-				
 				// Create GradingFormat
 				GradingFormat gf = gfs.getGradingFortmatByFormat(ra.gradeFormat);
 				r.setGradingFormat(gf);
@@ -249,6 +252,7 @@ public class FrontControllerServlet extends HttpServlet {
 				r.setpUp(pu);
 				rs.addReimbursement(r);
 				System.out.println("Added Reimbursement!");
+				response.getWriter().append("user.html");
 				break;
 			}
 			
@@ -270,16 +274,14 @@ public class FrontControllerServlet extends HttpServlet {
 					break;
 				}
 				if(u.getUsername().equals(login.un) && u.getPassword().equals(login.pw)) {
-					System.out.println("User, " + u.getName() + " has logged in.");
+					System.out.println("User " + u.getName() + " has logged in.");
 					if(u.getBcAdmin() || u.getDhAdmin() || u.getDsAdmin()) {
 						
 						session.setAttribute("current_user", u);
-						System.out.println("Going to Admin page.");
 						response.getWriter().append("admin.html");
 					}
 					else {
 						session.setAttribute("current_user", u);
-						System.out.println("Going to User page.");
 						response.getWriter().append("user.html");
 					}
 				}
