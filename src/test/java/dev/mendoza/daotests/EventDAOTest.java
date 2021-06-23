@@ -2,7 +2,8 @@ package dev.mendoza.daotests;
 
 import static org.junit.Assert.*;
 
-import java.sql.Timestamp;
+import java.util.Date;
+import java.time.LocalDate;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -18,9 +19,9 @@ public class EventDAOTest {
 	@Test @Ignore
 	public void addEventTest() {
 		EventType eType = new EventType(3, "Certification Preparation Classes", .75f);
-		Timestamp time = new Timestamp(System.currentTimeMillis());
-		Event e = new Event(time, "Tokyo, JPN", "Gamer School", 400f, eType);
-		assertEquals(true, edao.addEvent(e));
+		//Date time = new Date();
+		//Event e = new Event(time, "Tokyo, JPN", "Gamer School", 400f, eType);
+		//assertEquals(true, edao.addEvent(e));
 	}
 	
 	@Test

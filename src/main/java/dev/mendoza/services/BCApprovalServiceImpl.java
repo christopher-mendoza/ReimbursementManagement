@@ -1,5 +1,7 @@
 package dev.mendoza.services;
 
+import java.util.List;
+
 import dev.mendoza.daos.BCApprovalDAO;
 import dev.mendoza.models.BCApproval;
 
@@ -30,6 +32,16 @@ public class BCApprovalServiceImpl implements BCApprovalService {
 	@Override
 	public boolean changeBCExceed(BCApproval a) {
 		return adao.changeBCExceed(a);
+	}
+
+	@Override
+	public List<BCApproval> getAllBCApprovals() {
+		return adao.getAllBCApprovals();
+	}
+
+	@Override
+	public BCApproval getLatestBCApproval(List<BCApproval> bcList) {
+		return bcList.get(bcList.size() - 1);
 	}
 
 }

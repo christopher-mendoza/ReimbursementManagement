@@ -1,5 +1,7 @@
 package dev.mendoza.services;
 
+import java.util.List;
+
 import dev.mendoza.daos.PresentationUploadDAO;
 import dev.mendoza.models.PresentationUpload;
 
@@ -20,6 +22,16 @@ public class PresentationUploadServiceImpl implements PresentationUploadService 
 	@Override
 	public boolean changePresUpload(PresentationUpload p, byte[] upload) {
 		return pdao.changePresUpload(p, upload);
+	}
+
+	@Override
+	public List<PresentationUpload> getAllPresUploads() {
+		return pdao.getAllPresUploads();
+	}
+
+	@Override
+	public PresentationUpload getLatestPresUpload(List<PresentationUpload> puList) {
+		return puList.get(puList.size() - 1);
 	}
 
 }

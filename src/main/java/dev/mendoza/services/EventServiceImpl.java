@@ -1,5 +1,7 @@
 package dev.mendoza.services;
 
+import java.util.List;
+
 import dev.mendoza.daos.EventDAO;
 import dev.mendoza.models.Event;
 import dev.mendoza.models.EventType;
@@ -21,6 +23,16 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public EventType getEventTypeByEventType(String eventType) {
 		return edao.getEventTypeByEventType(eventType);
+	}
+
+	@Override
+	public List<Event> getAllEvents() {
+		return edao.getAllEvents();
+	}
+
+	@Override
+	public Event getLatestEvent(List<Event> eList) {
+		return eList.get(eList.size() - 1);
 	}
 
 }

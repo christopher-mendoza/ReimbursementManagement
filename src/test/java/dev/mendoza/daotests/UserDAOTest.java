@@ -22,8 +22,7 @@ public class UserDAOTest {
 	@Test @Ignore
 	public void addUserTest() {
 		Department d = new Department(6, "GHOST Department", "ghostsuper");
-		Timestamp time = new Timestamp(System.currentTimeMillis());
-		User u = new User(d, "test user", "test", "pass", 123.56f, time);
+		User u = new User(d, "test user", "test", "pass", 123.56f);
 		assertEquals(true, udao.addUser(u));
 	}
 

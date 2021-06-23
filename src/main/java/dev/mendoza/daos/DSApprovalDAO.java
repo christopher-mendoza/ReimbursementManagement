@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import dev.mendoza.models.DSApproval;
 import dev.mendoza.utils.JDBCConnection;
@@ -57,6 +59,28 @@ public class DSApprovalDAO {
 			}
 		}
 		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public List<DSApproval> getAllDSApprovals() {
+		String sql = "SELECT * FROM ds_approvals;";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			List<DSApproval> dsApprovals = new ArrayList<DSApproval>();
+			while(rs.next()) {
+				DSApproval ds = new DSApproval();
+				ds.setId(rs.getInt("ds_approval_id"));
+				ds.setName(rs.getString("ds_name"));
+				ds.setReason(rs.getString("ds_reason"));
+				ds.setApprove(rs.getBoolean("ds_approved"));
+				dsApprovals.add(ds);
+			}
+			return dsApprovals;
+		}
+		catch(SQLException e) {
 			e.printStackTrace();
 		}
 		return null;

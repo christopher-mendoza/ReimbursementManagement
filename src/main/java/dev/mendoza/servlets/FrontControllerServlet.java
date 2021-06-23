@@ -17,6 +17,14 @@ import javax.servlet.http.HttpSession;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import dev.mendoza.models.BCApproval;
+import dev.mendoza.models.DHApproval;
+import dev.mendoza.models.DSApproval;
+import dev.mendoza.models.Event;
+import dev.mendoza.models.EventType;
+import dev.mendoza.models.GradeUpload;
+import dev.mendoza.models.GradingFormat;
+import dev.mendoza.models.PresentationUpload;
 import dev.mendoza.models.Reimbursement;
 import dev.mendoza.models.User;
 import dev.mendoza.services.BCApprovalServiceImpl;
@@ -46,6 +54,7 @@ public class FrontControllerServlet extends HttpServlet {
 		public String location;
 		public String description;
 		public float cost;
+		public float missedWork;
 		public String gradeFormat;
 		public String eventType;
 		public String workJust;
@@ -56,6 +65,7 @@ public class FrontControllerServlet extends HttpServlet {
 	public static HttpSession session;
 	ReimbursementData rd = new ReimbursementData();
 	static User u;
+	static List<Reimbursement> l;
 	
 	ReimbursementServiceImpl rs = new ReimbursementServiceImpl();
 	EventServiceImpl es = new EventServiceImpl();
@@ -79,32 +89,32 @@ public class FrontControllerServlet extends HttpServlet {
 			case "/ReimbursementManagement/adminmain": {
 				System.out.println("Inside Admin Main.");
 				//ReimbursementServiceImpl rs = new ReimbursementServiceImpl();
-				List<Reimbursement> l = rs.getAllReimbursements();
+				l = rs.getAllReimbursements();
 				// Benefits Coordinator List
 				if(u.getBcAdmin() == true) {
-					for(Reimbursement r : l) {
-						if((r.getBcApproval().getApprove() == true)) {
-							l.remove(r);
+					for(int i = 0; i < l.size(); i++) {
+						if((l.get(i).getBcApproval().getApprove() == true)) {
+							l.remove(i);
 						}
 					}
 				}
 				
 				// Department Head List
 				else if(u.getDhAdmin() == true) {
-					for(Reimbursement r : l) {
-						if((!r.getDhApproval().getName().equals(u.getUsername())) 
-								|| (r.getDhApproval().getApprove() == true)) {
-							l.remove(r);
+					for(int i = 0; i < l.size(); i++) {
+						if((!l.get(i).getDhApproval().getName().equals(u.getUsername())) 
+								|| (l.get(i).getDhApproval().getApprove() == true)) {
+							l.remove(i);
 						}
 					}
 				}
 				
 				// Direct Supervisor List
 				else if(u.getDsAdmin() == true) {
-					for(Reimbursement r : l) {
-						if((!r.getBcApproval().getName().equals(u.getUsername())) 
-								|| (r.getDsApproval().getApprove() == true)) {
-							l.remove(r);
+					for(int i = 0; i < l.size(); i++) {
+						if((!l.get(i).getBcApproval().getName().equals(u.getUsername())) 
+								|| (l.get(i).getDsApproval().getApprove() == true)) {
+							l.remove(i);
 						}
 					}
 				}
@@ -149,10 +159,10 @@ public class FrontControllerServlet extends HttpServlet {
 			case "/ReimbursementManagement/usermain": {
 				System.out.println("Inside User Main.");
 				//ReimbursementServiceImpl rs = new ReimbursementServiceImpl();
-				List<Reimbursement> l = rs.getAllReimbursements();
-				for(Reimbursement r : l) {
-					if(!r.getUsername().equals(u.getUsername())) {
-						l.remove(r);
+				l = rs.getAllReimbursements();
+				for(int i = 0; i < l.size(); i++) {
+					if(!l.get(i).getUsername().equals(u.getUsername())) {
+						l.remove(i);
 					}
 				}
 				rd.list = l;
@@ -173,17 +183,72 @@ public class FrontControllerServlet extends HttpServlet {
 				System.out.println("Submitting Reimbursement");
 
 				ReimbursementApplication ra = gson.fromJson(request.getReader(), ReimbursementApplication.class);
-				System.out.println("cost: " + ra.cost);
-				System.out.println("date: " + ra.date.toString());
-				System.out.println("type: " + ra.eventType);
-				System.out.println("location: " + ra.location);
-				System.out.println("description: " + ra.description);
-				System.out.println("work just: " + ra.workJust);
-				System.out.println("user: " + u.getName());
-				System.out.println("username: " + u.getUsername());
-				
+				String uSuper = u.getDepartment().getSupervisor();
+				String uHead = us.getUserByUsername(uSuper).getDepartment().getSupervisor();
+				String uBenco = us.getUserByUsername(uHead).getDepartment().getSupervisor();
+				// Create Reimbursement
 				Reimbursement r = new Reimbursement();
+				r.setName(u.getName());
+				r.setUsername(u.getUsername());
+				r.setWorkJust(ra.workJust);
+				r.setMissedWork(ra.missedWork);
+				// Create Event
+				Event e = new Event();
+				e.setEventDate(ra.date);
+				e.setEventLocation(ra.location);
+				e.setEventDesc(ra.description);
+				e.setEventCost(ra.cost);
+				// Create EventType
+				EventType et = es.getEventTypeByEventType(ra.eventType);
+				e.setEventType(et);
+				es.addEvent(e);
+				List<Event> eList = es.getAllEvents();
+				e = es.getLatestEvent(eList);
+				r.setEvent(e);
 				
+				// Create GradingFormat
+				GradingFormat gf = gfs.getGradingFortmatByFormat(ra.gradeFormat);
+				r.setGradingFormat(gf);
+				// Add Direct Supervisor Approval
+				DSApproval ds = new DSApproval();
+				ds.setName(uSuper);
+				ds.setApprove(false);
+				dss.addDSApproval(ds);
+				List<DSApproval> dsList = dss.getAllDSApprovals();
+				ds = dss.getLatestDSApproval(dsList);
+				r.setDsApproval(ds);
+				// Add Department Head Approval
+				DHApproval dh = new DHApproval();
+				dh.setName(uHead);
+				dh.setApprove(false);
+				dhs.addDHApproval(dh);
+				List<DHApproval> dhList = dhs.getAllDHApprovals();
+				dh = dhs.getLatestDHApproval(dhList);
+				r.setDhApproval(dh);
+				// Add Benefits Coordinator Approval
+				BCApproval bc = new BCApproval();
+				bc.setName(uBenco);
+				bcs.addBCApproval(bc);
+				List<BCApproval> bcList = bcs.getAllBCApprovals();
+				bc = bcs.getLatestBCApproval(bcList);
+				r.setBcApproval(bc);
+				// Add Grade Upload
+				GradeUpload gu = new GradeUpload();
+				gu.setGradeFormat(ra.gradeFormat);
+				gu.setGradeUp("");
+				gus.addGradeUpload(gu);
+				List<GradeUpload> guList = gus.getAllGradeUploads();
+				gu = gus.getLatestGradeUpload(guList);
+				r.setgUp(gu);
+				// Add Presentation Upload
+				PresentationUpload pu = new PresentationUpload();
+				pu.setPresUp("".getBytes());
+				pus.addPresUpload(pu);
+				List<PresentationUpload> puList = pus.getAllPresUploads();
+				pu = pus.getLatestPresUpload(puList);
+				r.setpUp(pu);
+				rs.addReimbursement(r);
+				System.out.println("Added Reimbursement!");
 				break;
 			}
 			

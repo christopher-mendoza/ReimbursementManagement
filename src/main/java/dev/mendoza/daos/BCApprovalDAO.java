@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import dev.mendoza.models.BCApproval;
 import dev.mendoza.utils.JDBCConnection;
@@ -58,6 +60,29 @@ public class BCApprovalDAO {
 			}
 		}
 		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public List<BCApproval> getAllBCApprovals() {
+		String sql = "SELECT * FROM bc_approvals;";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			List<BCApproval> bcApprovals = new ArrayList<BCApproval>();
+			while(rs.next()) {
+				BCApproval a = new BCApproval();
+				a.setId(rs.getInt("bc_approval_id"));
+				a.setName(rs.getString("bc_name"));
+				a.setReason(rs.getString("bc_reason"));
+				a.setApprove(rs.getBoolean("bc_approved"));
+				a.setExceed(rs.getBoolean("bc_exceed"));
+				bcApprovals.add(a);
+			}
+			return bcApprovals;
+		}
+		catch(SQLException e) {
 			e.printStackTrace();
 		}
 		return null;

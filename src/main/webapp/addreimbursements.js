@@ -11,6 +11,7 @@ function submitFunction() {
     var eventLocValue = document.getElementById('eventLocation').value;
     var eventDescValue = document.getElementById('eventDesc').value;
     var eventCostValue = document.getElementById('eventCost').value;
+    var missedWorkValue = document.getElementById('missedWork').value;
     var gradeFormatValue = document.getElementById('gradeFormat').value;
     var eventTypeValue = document.getElementById('eventType').value;
     var workJustValue = document.getElementById('workJust').value;
@@ -36,6 +37,7 @@ function submitFunction() {
         location: eventLocValue,
         description: eventDescValue,
         cost: eventCostValue,
+        missedWork: missedWorkValue,
         gradeFormat: gradeFormatValue,
         eventType: eventTypeValue,
         workJust: workJustValue
@@ -52,6 +54,9 @@ function submitFunction() {
     }
     else if(eventCostValue <= 0) {
         alert('Need an actual event cost!');
+    }
+    else if(missedWorkValue <= 0) {
+        alert('Need missed work > 0!');
     }
     else if(gradeFormatValue == 'noSel') {
         alert('Need a grading format!');

@@ -1,5 +1,7 @@
 package dev.mendoza.services;
 
+import java.util.List;
+
 import dev.mendoza.daos.DSApprovalDAO;
 import dev.mendoza.models.DSApproval;
 
@@ -25,6 +27,16 @@ public class DSApprovalServiceImpl implements DSApprovalService {
 	@Override
 	public boolean changeDSReason(DSApproval a, String reason) {
 		return adao.changeDSReason(a, reason);
+	}
+
+	@Override
+	public List<DSApproval> getAllDSApprovals() {
+		return adao.getAllDSApprovals();
+	}
+
+	@Override
+	public DSApproval getLatestDSApproval(List<DSApproval> dsList) {
+		return dsList.get(dsList.size() - 1);
 	}
 
 }

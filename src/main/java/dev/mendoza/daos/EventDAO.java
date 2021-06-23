@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import dev.mendoza.models.Event;
 import dev.mendoza.models.EventType;
@@ -96,6 +98,36 @@ public class EventDAO {
 			}
 		}
 		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public List<Event> getAllEvents() {
+		String sql = "SELECT * FROM events " +
+					"JOIN event_types ON e_type = event_type_id;";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			List<Event> events = new ArrayList<Event>();
+			while(rs.next()) {
+				Event e = new Event();
+				e.setId(rs.getInt("event_id"));
+				e.setEventDate(rs.getDate("event_date"));
+				e.setEventLocation(rs.getString("event_location"));
+				e.setEventDesc(rs.getString("event_description"));
+				e.setEventCost(rs.getFloat("event_cost"));
+				// Add EventType Object
+				EventType eType = new EventType();
+				eType.setId(rs.getInt("event_type_id"));
+				eType.setType(rs.getString("event_type"));
+				eType.setCoverage(rs.getFloat("event_coverage"));
+				e.setEventType(eType);
+				events.add(e);
+			}
+			return events;
+		}
+		catch(SQLException e) {
 			e.printStackTrace();
 		}
 		return null;

@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import dev.mendoza.models.DHApproval;
 import dev.mendoza.utils.JDBCConnection;
@@ -55,6 +57,27 @@ public class DHApprovalDAO {
 			}
 		}
 		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public List<DHApproval> getAllDHApprovals() {
+		String sql = "SELECT * FROM dh_approvals;";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			List<DHApproval> dhApprovals = new ArrayList<DHApproval>();
+			while(rs.next()) {
+				DHApproval a = new DHApproval();
+				a.setId(rs.getInt("dh_approval_id"));
+				a.setName(rs.getString("dh_name"));
+				a.setApprove(rs.getBoolean("dh_approved"));
+				dhApprovals.add(a);
+			}
+			return dhApprovals;
+		}
+		catch(SQLException e) {
 			e.printStackTrace();
 		}
 		return null;

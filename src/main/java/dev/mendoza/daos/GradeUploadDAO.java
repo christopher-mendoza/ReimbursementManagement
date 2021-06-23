@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import dev.mendoza.models.GradeUpload;
 import dev.mendoza.utils.JDBCConnection;
@@ -54,6 +56,27 @@ public class GradeUploadDAO {
 			}
 		}
 		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public List<GradeUpload> getAllGradeUploads() {
+		String sql = "SELECT * FROM grade_uploads;";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			List<GradeUpload> gradeUploads = new ArrayList<GradeUpload>();
+			while(rs.next()) {
+				GradeUpload g = new GradeUpload();
+				g.setId(rs.getInt("grade_upload_id"));
+				g.setGradeFormat(rs.getString("grade_upload_format"));
+				g.setGradeUp(rs.getString("grade_up"));
+				gradeUploads.add(g);
+			}
+			return gradeUploads;
+		}
+		catch(SQLException e) {
 			e.printStackTrace();
 		}
 		return null;

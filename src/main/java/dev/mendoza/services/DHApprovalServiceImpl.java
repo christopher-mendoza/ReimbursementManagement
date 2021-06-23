@@ -1,5 +1,7 @@
 package dev.mendoza.services;
 
+import java.util.List;
+
 import dev.mendoza.daos.DHApprovalDAO;
 import dev.mendoza.models.DHApproval;
 
@@ -20,6 +22,16 @@ public class DHApprovalServiceImpl implements DHApprovalService {
 	@Override
 	public boolean changeDHApprove(DHApproval a) {
 		return adao.changeDHApprove(a);
+	}
+
+	@Override
+	public List<DHApproval> getAllDHApprovals() {
+		return adao.getAllDHApprovals();
+	}
+
+	@Override
+	public DHApproval getLatestDHApproval(List<DHApproval> dhList) {
+		return dhList.get(dhList.size() - 1);
 	}
 
 }

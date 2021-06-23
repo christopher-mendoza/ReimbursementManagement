@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import dev.mendoza.models.PresentationUpload;
 import dev.mendoza.utils.JDBCConnection;
@@ -54,6 +56,27 @@ public class PresentationUploadDAO {
 			}
 		}
 		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public List<PresentationUpload> getAllPresUploads() {
+		String sql = "SELECT * FROM presentation_uploads;";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			List<PresentationUpload> presUploads = new ArrayList<PresentationUpload>();
+			while(rs.next()) {
+				PresentationUpload p = new PresentationUpload();
+				p.setId(rs.getInt("presentation_upload_id"));
+				// Fix this to whatever presUp ends up being
+				p.setPresUp(rs.getBytes("presentation_up"));
+				presUploads.add(p);
+			}
+			return presUploads;
+		}
+		catch(SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
