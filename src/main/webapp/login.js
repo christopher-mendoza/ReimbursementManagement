@@ -27,6 +27,7 @@ function loginFunction() {
         function receiveData() {
             if(xhttp.readyState == 4) {
                 if(xhttp.status == 200) {
+                    console.log(xhttp.responseText);
                     window.location.href = xhttp.responseText;
                 }
             }
