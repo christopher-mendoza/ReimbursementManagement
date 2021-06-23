@@ -76,4 +76,28 @@ public class EventDAO {
 		}
 		return null;
 	}
+	
+	public EventType getEventTypeByEventType(String eventType) {
+		String sql = "SELECT * FROM event_types " +
+					 "WHERE event_type = ?;";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, eventType);
+			ResultSet rs = ps.executeQuery();
+			if(!rs.isBeforeFirst()) {
+				return null;
+			}
+			if(rs.next()) {
+				EventType eType = new EventType();
+				eType.setId(rs.getInt("event_type_id"));
+				eType.setType(rs.getString("event_type"));
+				eType.setCoverage(rs.getFloat("event_coverage"));
+				return eType;
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
