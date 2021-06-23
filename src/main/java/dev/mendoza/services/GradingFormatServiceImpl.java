@@ -18,4 +18,9 @@ public class GradingFormatServiceImpl implements GradingFormatService {
 		return gdao.getAllGradingFormats();
 	}
 
+	@Override
+	public GradingFormat getGradingFortmatByFormat(String format) {
+		return gdao.getGradingFormatByFormat(format);
+	}
+
 }
