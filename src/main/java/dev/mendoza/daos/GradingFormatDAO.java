@@ -46,6 +46,31 @@ public class GradingFormatDAO {
 		return null;
 	}
 	
+	public GradingFormat getGradingFormatByFormat(String format) {
+		String sql = "SELECT * FROM gradeformats WHERE g_grade_format = ?;";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, format);
+			ResultSet rs = ps.executeQuery();
+			// Checks if ResultSet returns nothing (bad input)
+			if(!rs.isBeforeFirst()) {
+				return null;
+			}
+			if(rs.next()) {
+				GradingFormat gf = new GradingFormat();
+				gf.setId(rs.getInt("gradeformat_id"));
+				gf.setgFormatName(rs.getString("g_grade_format"));
+				gf.setGrade(rs.getString("grade"));
+				gf.setPass(rs.getBoolean("pass"));
+				return gf;
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public List<GradingFormat> getAllGradingFormats() {
 		String sql = "SELECT * FROM gradeformats";
 		try {

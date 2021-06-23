@@ -15,6 +15,7 @@ function submitFunction() {
     var eventTypeValue = document.getElementById('eventType').value;
     var workJustValue = document.getElementById('workJust').value;
 
+    // Change Date to mm-dd-yyyy
     function formatDate(date) {
         var d = new Date(date),
             month = '' + (d.getMonth() + 1),
