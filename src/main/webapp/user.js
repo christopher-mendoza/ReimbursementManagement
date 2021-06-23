@@ -3,6 +3,83 @@ const url = 'http://localhost:8080/ReimbursementManagement';
 let logoutbtn = document.getElementById('backbtn');
 logoutbtn.addEventListener('click', logOut);
 
+let userPage = document.getElementById('user');
+
+const getReimbursements = () => {
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = receiveData;
+
+    xhttp.open("GET", url + "/usermain", true);
+    xhttp.send();
+    
+    function receiveData() {
+        if(xhttp.readyState == 4 && xhttp.status == 200) {
+            let res = xhttp.response.replace("login.html", "");
+            user = JSON.parse(res);
+            // get name
+            let greet = document.createElement("h3");
+            greet.innerHTML = "Hello " + user.user.name + "!";
+            console.log(user.user.name);
+            userPage.append(greet);
+
+            // get reimbursements
+            let rTable = document.createElement('table');
+            let rTableRow = document.createElement('tr');
+            let rTableHeaders = [ 
+                'Name',
+                'Event Date',
+                'Location',
+                'Cost',
+                'Event Type',
+                'Missed Work',
+                'Work Justification',
+                'Grade Format',
+                'Benefits Coordinator Approved',
+                'Department Head Approved',
+                'Direct Supervisor Approved',
+                'Grade Upload'
+            ]
+            // Headers
+            for(h of rTableHeaders) {
+                let th = document.createElement('th');
+                th.innerHTML = h;
+                rTableRow.appendChild(th);
+            }
+            rTable.append(rTableRow);
+
+            // Reimbursement Rows
+            for(r of user.list) {
+                rTableRow = document.createElement('tr');
+
+                // Name
+                let name = document.createElement('td');
+                name.innerHTML = r.name;
+                rTableRow.appendChild(name);
+
+                //Event Date
+                let eventDate = document.createElement('td');
+                eventDate.innerHTML = r.event.eventDate;
+                rTableRow.appendChild(eventDate);
+
+                // Event Location
+                let eventLocation = document.createElement('td');
+                eventLocation.innerHTML = r.event.eventLocation;
+                rTableRow.appendChild(eventLocation);
+
+                // Event Cost
+                let eventCost = document.createElement('td');
+                eventCost.innerHTML = '$' + r.event.eventCost;
+                rTableRow.appendChild(eventCost);
+
+                rTable.append(rTableRow);
+            }
+            userPage.append(rTable);
+            console.log(user);
+        } 
+    }
+}
+
+window.onload = getReimbursements();
 
 function logOut() {
     console.log('clicked button');

@@ -27,10 +27,12 @@ public class FrontControllerServlet extends HttpServlet {
 	class ReimbursementData {
 		public User user;
 		public List<Reimbursement> list;
+
 	}
 	
 	private Gson gson = new Gson();
 	public static HttpSession session;
+	ReimbursementData rd = new ReimbursementData();
 	static User u;
 	
 	@Override
@@ -40,33 +42,43 @@ public class FrontControllerServlet extends HttpServlet {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Content-Type", "application/json");	
 		session = request.getSession();
-		System.out.println("doget: " + session.getId());
 		switch(uri) {
-		
-			case "/ReimbursementManagement/adminreimbursements": {
-				System.out.println("Inside adminreimbursements");
+			// Admin Main
+			case "/ReimbursementManagement/adminmain": {
+				System.out.println("Inside Admin Main.");
 				ReimbursementServiceImpl rs = new ReimbursementServiceImpl();
 				List<Reimbursement> l = rs.getAllReimbursements();
-				ReimbursementData rd = new ReimbursementData();
 				// Benefits Coordinator List
 				if(u.getBcAdmin() == true) {
-					rd.list = l;
-					rd.user = u;
-					response.getWriter().append(gson.toJson(rd));
-				}
-				// Department Head List
-				else if(u.getDhAdmin() == true) {
 					for(Reimbursement r : l) {
-						if(!r.getDhApproval().getName().equals(u.getUsername())) {
+						if((r.getBcApproval().getApprove() == true)) {
 							l.remove(r);
 						}
 					}
-					rd.list = l;
-					rd.user = u;
-					response.getWriter().append(gson.toJson(rd));
 				}
+				
+				// Department Head List
+				else if(u.getDhAdmin() == true) {
+					for(Reimbursement r : l) {
+						if((!r.getDhApproval().getName().equals(u.getUsername())) 
+								|| (r.getDhApproval().getApprove() == true)) {
+							l.remove(r);
+						}
+					}
+				}
+				
 				// Direct Supervisor List
-				//response.getWriter().append(gson.toJson(rd));
+				else if(u.getDsAdmin() == true) {
+					for(Reimbursement r : l) {
+						if((!r.getBcApproval().getName().equals(u.getUsername())) 
+								|| (r.getDsApproval().getApprove() == true)) {
+							l.remove(r);
+						}
+					}
+				}
+				rd.list = l;
+				rd.user = u;
+				response.getWriter().append(gson.toJson(rd));
 				break;
 			}
 //			case "/ReimbursementManagement/home": {
@@ -100,6 +112,24 @@ public class FrontControllerServlet extends HttpServlet {
 //				}
 //				break;
 //			}
+			
+			// User Main
+			case "/ReimbursementManagement/usermain": {
+				System.out.println("Inside User Main.");
+				ReimbursementServiceImpl rs = new ReimbursementServiceImpl();
+				List<Reimbursement> l = rs.getAllReimbursements();
+				for(Reimbursement r : l) {
+					if(!r.getUsername().equals(u.getUsername())) {
+						l.remove(r);
+					}
+				}
+				rd.list = l;
+				rd.user = u;
+				response.getWriter().append(gson.toJson(rd));
+				break;
+			}
+			
+			// Login
 			case "/ReimbursementManagement/login": {
 				System.out.println("Got login");
 
@@ -117,7 +147,6 @@ public class FrontControllerServlet extends HttpServlet {
 						
 						session.setAttribute("current_user", u);
 						System.out.println("Going to Admin page.");
-						System.out.println(session.getId());
 						response.getWriter().append("admin.html");
 					}
 					else {
@@ -137,6 +166,7 @@ public class FrontControllerServlet extends HttpServlet {
 			case "/ReimbursementManagement/logout": {
 				System.out.println("Logging out.");
 				session.invalidate();
+				u = null;
 				response.getWriter().append("login.html");
 				
 				break;

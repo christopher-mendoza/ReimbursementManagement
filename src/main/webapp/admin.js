@@ -3,14 +3,14 @@ const url = 'http://localhost:8080/ReimbursementManagement';
 let logoutbtn = document.getElementById('backbtn');
 logoutbtn.addEventListener('click', logOut);
 
-let adminPage = document.getElementById('user');
+let adminPage = document.getElementById('admin');
 
 
 const getReimbursements = () => {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = receiveData;
 
-    xhttp.open("GET", url + "/adminreimbursements", true);
+    xhttp.open("GET", url + "/adminmain", true);
     xhttp.send();
     
     function receiveData() {
