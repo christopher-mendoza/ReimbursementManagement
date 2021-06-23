@@ -1,6 +1,9 @@
 package dev.mendoza.servlets;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -12,9 +15,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import dev.mendoza.models.Reimbursement;
 import dev.mendoza.models.User;
+import dev.mendoza.services.BCApprovalServiceImpl;
+import dev.mendoza.services.DHApprovalServiceImpl;
+import dev.mendoza.services.DSApprovalServiceImpl;
+import dev.mendoza.services.EventServiceImpl;
+import dev.mendoza.services.GradeUploadServiceImpl;
+import dev.mendoza.services.GradingFormatServiceImpl;
+import dev.mendoza.services.PresentationUploadServiceImpl;
 import dev.mendoza.services.ReimbursementServiceImpl;
 import dev.mendoza.services.UserServiceImpl;
 
@@ -30,11 +41,31 @@ public class FrontControllerServlet extends HttpServlet {
 
 	}
 	
+	class ReimbursementApplication {
+		public Date date;
+		public String location;
+		public String description;
+		public float cost;
+		public String gradeFormat;
+		public String eventType;
+		public String workJust;
+	}
 
-	private Gson gson = new Gson();
+	Gson gson=  new GsonBuilder().setDateFormat("MM-dd-yyyy").create();
+	
 	public static HttpSession session;
 	ReimbursementData rd = new ReimbursementData();
 	static User u;
+	
+	ReimbursementServiceImpl rs = new ReimbursementServiceImpl();
+	EventServiceImpl es = new EventServiceImpl();
+	UserServiceImpl us = new UserServiceImpl();
+	GradingFormatServiceImpl gfs = new GradingFormatServiceImpl();
+	DSApprovalServiceImpl dss = new DSApprovalServiceImpl();
+	DHApprovalServiceImpl dhs = new DHApprovalServiceImpl();
+	BCApprovalServiceImpl bcs = new BCApprovalServiceImpl();
+	GradeUploadServiceImpl gus = new GradeUploadServiceImpl();
+	PresentationUploadServiceImpl pus = new PresentationUploadServiceImpl();
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -47,7 +78,7 @@ public class FrontControllerServlet extends HttpServlet {
 			// Admin Main
 			case "/ReimbursementManagement/adminmain": {
 				System.out.println("Inside Admin Main.");
-				ReimbursementServiceImpl rs = new ReimbursementServiceImpl();
+				//ReimbursementServiceImpl rs = new ReimbursementServiceImpl();
 				List<Reimbursement> l = rs.getAllReimbursements();
 				// Benefits Coordinator List
 				if(u.getBcAdmin() == true) {
@@ -117,7 +148,7 @@ public class FrontControllerServlet extends HttpServlet {
 			// User Main
 			case "/ReimbursementManagement/usermain": {
 				System.out.println("Inside User Main.");
-				ReimbursementServiceImpl rs = new ReimbursementServiceImpl();
+				//ReimbursementServiceImpl rs = new ReimbursementServiceImpl();
 				List<Reimbursement> l = rs.getAllReimbursements();
 				for(Reimbursement r : l) {
 					if(!r.getUsername().equals(u.getUsername())) {
@@ -137,9 +168,28 @@ public class FrontControllerServlet extends HttpServlet {
 				break;
 			}
 			
+			// Submit Reimbursements
+			case "/ReimbursementManagement/submitreimbursement": {
+				System.out.println("Submitting Reimbursement");
+
+				ReimbursementApplication ra = gson.fromJson(request.getReader(), ReimbursementApplication.class);
+				System.out.println("cost: " + ra.cost);
+				System.out.println("date: " + ra.date.toString());
+				System.out.println("type: " + ra.eventType);
+				System.out.println("location: " + ra.location);
+				System.out.println("description: " + ra.description);
+				System.out.println("work just: " + ra.workJust);
+				System.out.println("user: " + u.getName());
+				System.out.println("username: " + u.getUsername());
+				
+				Reimbursement r = new Reimbursement();
+				
+				break;
+			}
 			
 			// Cancel Reimbursement
 			case "/ReimbursementManagement/cancelapp": {
+				System.out.println("Cancelled Reimbursement Application.");
 				response.getWriter().append("user.html");
 				break;
 			}
@@ -147,10 +197,8 @@ public class FrontControllerServlet extends HttpServlet {
 			// Login
 			case "/ReimbursementManagement/login": {
 				System.out.println("Got login");
-
-				
 				LoginAttempt login = gson.fromJson(request.getReader(), LoginAttempt.class);
-				UserServiceImpl us = new UserServiceImpl();
+				//UserServiceImpl us = new UserServiceImpl();
 				u = us.getUserByUsername(login.un);
 				if(u == null) {
 					System.out.println("Failed admin login attempt.");

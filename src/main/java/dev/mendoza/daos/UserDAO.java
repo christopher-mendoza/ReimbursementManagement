@@ -31,7 +31,7 @@ public class UserDAO {
 	private Connection conn = JDBCConnection.getConnection();
 	
 	public boolean addUser(User u) {
-		String sql = "INSERT INTO users VALUES (default, ?, ?, ?, ?, 0, current_timestamp) RETURNING *;";
+		String sql = "INSERT INTO users VALUES (default, ?, ?, ?, ?, 0) RETURNING *;";
 		try {
 			CallableStatement cs = conn.prepareCall(sql);
 			cs.setInt(1, u.getDepartment().getId());
@@ -74,7 +74,6 @@ public class UserDAO {
 				u.setUsername(rs.getString("u_username"));
 				u.setPassword(rs.getString("password"));
 				u.setReAmount(rs.getFloat("reim_amount"));
-				u.setReTimer(rs.getTimestamp("reim_timer"));
 				u.setBcAdmin(rs.getBoolean("bc_admin"));
 				u.setDsAdmin(rs.getBoolean("ds_admin"));
 				u.setDhAdmin(rs.getBoolean("dh_admin"));
@@ -110,7 +109,6 @@ public class UserDAO {
 				u.setUsername(rs.getString("u_username"));
 				u.setPassword(rs.getString("password"));
 				u.setReAmount(rs.getFloat("reim_amount"));
-				u.setReTimer(rs.getTimestamp("reim_timer"));
 				u.setBcAdmin(rs.getBoolean("bc_admin"));
 				u.setDsAdmin(rs.getBoolean("ds_admin"));
 				u.setDhAdmin(rs.getBoolean("dh_admin"));
@@ -145,7 +143,6 @@ public class UserDAO {
 				u.setUsername(rs.getString("u_username"));
 				u.setPassword(rs.getString("password"));
 				u.setReAmount(rs.getFloat("reim_amount"));
-				u.setReTimer(rs.getTimestamp("reim_timer"));
 				u.setBcAdmin(rs.getBoolean("bc_admin"));
 				u.setDsAdmin(rs.getBoolean("ds_admin"));
 				u.setDhAdmin(rs.getBoolean("dh_admin"));

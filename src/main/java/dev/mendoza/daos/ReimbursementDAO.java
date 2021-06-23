@@ -97,7 +97,7 @@ public class ReimbursementDAO {
 				// Add Event
 				Event e = new Event();
 				e.setId(rs.getInt("event_id"));
-				e.setEventDate(rs.getTimestamp("event_date"));
+				e.setEventDate(rs.getDate("event_date"));
 				e.setEventLocation(rs.getString("event_location"));
 				e.setEventDesc(rs.getString("event_description"));
 				e.setEventCost(rs.getFloat("event_cost"));
@@ -182,7 +182,7 @@ public class ReimbursementDAO {
 				// Add Event
 				Event e = new Event();
 				e.setId(rs.getInt("event_id"));
-				e.setEventDate(rs.getTimestamp("event_date"));
+				e.setEventDate(rs.getDate("event_date"));
 				e.setEventLocation(rs.getString("event_location"));
 				e.setEventDesc(rs.getString("event_description"));
 				e.setEventCost(rs.getFloat("event_cost"));

@@ -1,10 +1,11 @@
 package dev.mendoza.models;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 public class Event {
 	private Integer id;
-	private Timestamp eventDate;
+	private Date eventDate;
 	private String eventLocation;
 	private String eventDesc;
 	private Float eventCost;
@@ -14,7 +15,7 @@ public class Event {
 		super();
 	}
 
-	public Event(Timestamp eventDate, String eventLocation, String eventDesc, Float eventCost, EventType eventType) {
+	public Event(Date eventDate, String eventLocation, String eventDesc, Float eventCost, EventType eventType) {
 		super();
 		this.eventDate = eventDate;
 		this.eventLocation = eventLocation;
@@ -23,7 +24,7 @@ public class Event {
 		this.eventType = eventType;
 	}
 
-	public Event(Integer id, Timestamp eventDate, String eventLocation, String eventDesc, Float eventCost,
+	public Event(Integer id, Date eventDate, String eventLocation, String eventDesc, Float eventCost,
 			EventType eventType) {
 		super();
 		this.id = id;
@@ -42,11 +43,11 @@ public class Event {
 		this.id = id;
 	}
 
-	public Timestamp getEventDate() {
+	public Date getEventDate() {
 		return eventDate;
 	}
 
-	public void setEventDate(Timestamp eventDate) {
+	public void setEventDate(Date eventDate) {
 		this.eventDate = eventDate;
 	}
 

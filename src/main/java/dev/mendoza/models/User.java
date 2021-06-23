@@ -9,7 +9,6 @@ public class User {
 	private String username;
 	private String password;
 	private Float reAmount;
-	private Timestamp reTimer;
 	private Boolean dsAdmin;
 	private Boolean dhAdmin;
 	private Boolean bcAdmin;
@@ -18,7 +17,7 @@ public class User {
 		super();
 	}
 
-	public User(Integer id, Department department, String name, String username, String password, Float reAmount, Timestamp reTimer) {
+	public User(Integer id, Department department, String name, String username, String password, Float reAmount) {
 		super();
 		this.id = id;
 		this.department = department;
@@ -26,17 +25,15 @@ public class User {
 		this.username = username;
 		this.password = password;
 		this.reAmount = reAmount;
-		this.reTimer = reTimer;
 	}
 
-	public User(Department department, String name, String username, String password, Float reAmount, Timestamp reTimer) {
+	public User(Department department, String name, String username, String password, Float reAmount) {
 		super();
 		this.department = department;
 		this.name = name;
 		this.username = username;
 		this.password = password;
 		this.reAmount = reAmount;
-		this.reTimer = reTimer;
 	}
 
 	public Integer getId() {
@@ -87,14 +84,6 @@ public class User {
 		this.reAmount = reAmount;
 	}
 
-	public Timestamp getReTimer() {
-		return reTimer;
-	}
-
-	public void setReTimer(Timestamp reTimer) {
-		this.reTimer = reTimer;
-	}
-
 	public Boolean getDsAdmin() {
 		return dsAdmin;
 	}
@@ -131,7 +120,6 @@ public class User {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((reAmount == null) ? 0 : reAmount.hashCode());
-		result = prime * result + ((reTimer == null) ? 0 : reTimer.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
@@ -185,11 +173,6 @@ public class User {
 				return false;
 		} else if (!reAmount.equals(other.reAmount))
 			return false;
-		if (reTimer == null) {
-			if (other.reTimer != null)
-				return false;
-		} else if (!reTimer.equals(other.reTimer))
-			return false;
 		if (username == null) {
 			if (other.username != null)
 				return false;
@@ -201,7 +184,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", department=" + department + ", name=" + name + ", username=" + username
-				+ ", password=" + password + ", reAmount=" + reAmount + ", reTimer=" + reTimer + ", dsAdmin=" + dsAdmin
+				+ ", password=" + password + ", reAmount=" + reAmount + ", dsAdmin=" + dsAdmin
 				+ ", dhAdmin=" + dhAdmin + ", bcAdmin=" + bcAdmin + "]";
 	}
 	

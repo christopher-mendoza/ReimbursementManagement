@@ -28,7 +28,7 @@ public class EventDAO {
 		String sql = "INSERT INTO events VALUES (default, ?, ?, ?, ?, ?) RETURNING *;";
 		try {
 			CallableStatement cs = conn.prepareCall(sql);
-			cs.setTimestamp(1, e.getEventDate());
+			cs.setDate(1, e.getEventDate());
 			cs.setString(2, e.getEventLocation());
 			cs.setString(3,  e.getEventDesc());
 			cs.setFloat(4,  e.getEventCost());
@@ -58,7 +58,7 @@ public class EventDAO {
 			if(rs.next()) {
 				Event e = new Event();
 				e.setId(rs.getInt("event_id"));
-				e.setEventDate(rs.getTimestamp("event_date"));
+				e.setEventDate(rs.getDate("event_date"));
 				e.setEventLocation(rs.getString("event_location"));
 				e.setEventDesc(rs.getString("event_description"));
 				e.setEventCost(rs.getFloat("event_cost"));

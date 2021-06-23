@@ -15,11 +15,26 @@ function submitFunction() {
     var eventTypeValue = document.getElementById('eventType').value;
     var workJustValue = document.getElementById('workJust').value;
 
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+    
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
+    
+        return [month, day, year].join('-');
+    };
+    
+
     let reimbursementApplication = {
-        eventDate: eventDateValue,
-        eventLoc: eventLocValue,
-        eventDesc: eventDescValue,
-        eventCost: eventCostValue,
+        date: formatDate(eventDateValue),
+        location: eventLocValue,
+        description: eventDescValue,
+        cost: eventCostValue,
         gradeFormat: gradeFormatValue,
         eventType: eventTypeValue,
         workJust: workJustValue
