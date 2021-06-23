@@ -30,6 +30,7 @@ public class FrontControllerServlet extends HttpServlet {
 
 	}
 	
+
 	private Gson gson = new Gson();
 	public static HttpSession session;
 	ReimbursementData rd = new ReimbursementData();
@@ -126,6 +127,20 @@ public class FrontControllerServlet extends HttpServlet {
 				rd.list = l;
 				rd.user = u;
 				response.getWriter().append(gson.toJson(rd));
+				break;
+			}
+			
+			// Add Reimbursements
+			case "/ReimbursementManagement/addreimbursements": {
+				System.out.println("Inside User Add Reimbursements.");
+				response.getWriter().append("addreimbursements.html");
+				break;
+			}
+			
+			
+			// Cancel Reimbursement
+			case "/ReimbursementManagement/cancelapp": {
+				response.getWriter().append("user.html");
 				break;
 			}
 			

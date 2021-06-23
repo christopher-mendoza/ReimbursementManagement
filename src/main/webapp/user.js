@@ -3,6 +3,9 @@ const url = 'http://localhost:8080/ReimbursementManagement';
 let logoutbtn = document.getElementById('backbtn');
 logoutbtn.addEventListener('click', logOut);
 
+let addbtn = document.getElementById('addbtn');
+addbtn.addEventListener('click', addReimbursements);
+
 let userPage = document.getElementById('user');
 
 const getReimbursements = () => {
@@ -21,6 +24,11 @@ const getReimbursements = () => {
             greet.innerHTML = "Hello " + user.user.name + "!";
             console.log(user.user.name);
             userPage.append(greet);
+
+            // get reimbursement amt
+            let amount = document.createElement("h3");
+            amount.innerHTML = "Projected Reimbursement Total: $" + user.user.reAmount;
+            userPage.append(amount);
 
             // get reimbursements
             let rTable = document.createElement('table');
@@ -80,6 +88,18 @@ const getReimbursements = () => {
 }
 
 window.onload = getReimbursements();
+
+function addReimbursements() {
+    let xhttp = new XMLHttpRequest();
+    xhttp.open('POST', url + '/addreimbursements');
+    xhttp.send();
+    xhttp.onreadystatechange = receiveData;
+    
+    function receiveData() {
+        console.log('Switching to addReimbursements.html');
+        window.location.href = xhttp.responseText;
+    }
+}
 
 function logOut() {
     console.log('clicked button');
