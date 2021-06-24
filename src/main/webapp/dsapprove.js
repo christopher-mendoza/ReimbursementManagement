@@ -3,10 +3,18 @@ const url = 'http://localhost:8080/ReimbursementManagement';
 let backbtn = document.getElementById('backbtn');
 backbtn.addEventListener('click', goBack);
 
+let submitbtn = document.getElementById('submitbtn');
+submitbtn.addEventListener('click', submitJudgement);
+
 let dropdownDiv = document.getElementById('dropdownDiv');
 
 let dropDown = document.getElementById('dropDown');
 
+let adminformDiv = document.getElementById('adminformDiv');
+
+let judgement = document.getElementById('judgement');
+
+let reasonDiv = document.getElementById('reasonDiv');
 
 
 const getReimbursements = () => {
@@ -43,10 +51,12 @@ function showReimbursement() {
     let list = jsonObject.list[dropDown.selectedIndex - 1];
     tableDiv.innerHTML = '';
     if(dropDown.selectedIndex != 0) {
+        submitbtn.hidden = false;
         let rTable = document.createElement('table');
         let rTableRow = document.createElement('tr');
         let rTableHeaders = [ 
             '#',
+            'Name',
             'Event Date',
             'Location',
             'Cost',
@@ -69,6 +79,11 @@ function showReimbursement() {
         let number = document.createElement('td');
         number.innerHTML = dropDown.selectedIndex;
         rTableRow.appendChild(number);
+
+        // Name
+        let name = document.createElement('td');
+        name.innerHTML = list.name;
+        rTableRow.appendChild(name);
 
         // Event Date
         let eventDate = document.createElement('td');
@@ -114,7 +129,55 @@ function showReimbursement() {
         tableDiv.append(rTable);
 
         // Create admin form
+        adminformDiv.hidden = false;
         
+    }
+    else {
+        submitbtn.hidden = true;
+        adminformDiv.hidden = true;
+        reasonDiv.hidden = true;
+    }
+}
+
+function showReason() {
+    console.log(judgement.selectedIndex);
+    if(judgement.selectedIndex == 1) {
+        reasonDiv.hidden = false;
+    }
+    else {
+        reasonDiv.hidden = true;
+    }
+}
+
+function submitJudgement() {
+    var reasonValue = document.getElementById('reasondesc').value;
+
+    let dsSubmit = {
+        judgement: judgement.selectedIndex,
+        reason: reasonValue,
+        id: jsonObject.list[dropDown.selectedIndex - 1].id
+    }
+
+    if(judgement.selectedIndex == 1 && reasonValue == '') {
+        alert('Need a reason!');
+    } 
+    else {
+        if(judgement.selectedIndex == 0) {
+            dsSubmit.reason = '';
+        }
+        let dsJson = JSON.stringify(dsSubmit);
+        let xhttp = new XMLHttpRequest();
+        xhttp.open('POST', url + '/dssubmit');
+        xhttp.send(dsJson);
+        xhttp.onreadystatechange = receieveData;
+
+        function receieveData() {
+            if(xhttp.readyState == 4) {
+                if(xhttp.status == 200) {
+                    window.location.href = xhttp.responseText;
+                }
+            }
+        }
     }
 }
 

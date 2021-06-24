@@ -59,6 +59,12 @@ public class FrontControllerServlet extends HttpServlet {
 		public String eventType;
 		public String workJust;
 	}
+	
+	class DSSubmit {
+		public String judgement;
+		public String reason;
+		public int id;
+	}
 
 	Gson gson=  new GsonBuilder().setDateFormat("MM-dd-yyyy").create();
 	
@@ -94,7 +100,7 @@ public class FrontControllerServlet extends HttpServlet {
 					for(int i = 0; i < l.size(); i++) {
 						if((l.get(i).getBcApproval().getApprove() == true)) {
 							l.remove(i);
-							i = 0;
+							i = -1;
 						}
 					}
 				}
@@ -105,7 +111,7 @@ public class FrontControllerServlet extends HttpServlet {
 						if((!l.get(i).getDhApproval().getName().equals(u.getUsername())) 
 								|| (l.get(i).getDhApproval().getApprove() == true)) {
 							l.remove(i);
-							i = 0;
+							i = -1;
 						}
 					}
 				}
@@ -116,7 +122,7 @@ public class FrontControllerServlet extends HttpServlet {
 						if((!l.get(i).getDsApproval().getName().equals(u.getUsername())) 
 								|| (l.get(i).getDsApproval().getApprove() == true)) {
 							l.remove(i);
-							i = 0;
+							i = -1;
 						}
 					}
 				}
@@ -137,6 +143,30 @@ public class FrontControllerServlet extends HttpServlet {
 			case "/ReimbursementManagement/dslist": {
 				System.out.println("Getting Direct Supervisor List.");
 				response.getWriter().append(gson.toJson(rd));
+				break;
+			}
+			
+			// Direct Supervisor Submit Judgement
+			case "/ReimbursementManagement/dssubmit": {
+				System.out.println("Submitting Direct Supervisor Judgement.");
+				DSSubmit dsSubmit = gson.fromJson(request.getReader(), DSSubmit.class);
+				Reimbursement r = rs.getReimbursementById(dsSubmit.id);
+				System.out.println(r.getDsApproval().getId());
+				DSApproval directSuper = dss.getDSApprovalById(r.getDsApproval().getId());
+				// Submitted Reject
+				if(dsSubmit.judgement.equals("1")) {
+					System.out.println("Received Reject for id: " + dsSubmit.id);
+					dss.changeDSReason(directSuper, dsSubmit.reason);
+				}
+				else {
+					System.out.println("Received Accept for id: " + dsSubmit.id);
+					dss.changeDSApprove(directSuper);
+					dss.changeDSReason(directSuper, "");
+				}
+				System.out.println(dsSubmit.judgement);
+				System.out.println(dsSubmit.reason);
+				System.out.println("id: " + dsSubmit.id);
+				response.getWriter().append("admin.html");
 				break;
 			}
 			

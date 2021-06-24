@@ -16,9 +16,19 @@
     <div id="tableDiv">
 
     </div>
+    <div id="adminformDiv" hidden>
+        <select id="judgement" onchange="showReason()">
+            <option value="true">Accept</option>
+            <option value="false">Reject</option>
+        </select>
+        <div id="reasonDiv" hidden>
+            Reason: <input type="text" id="reasondesc"/>
+        </div>
+        
+    </div>
     <div id="btnholder">
         <button type="button" id="backbtn">Go Back</button>
-
+        <button type="button" id="submitbtn" hidden>Submit Judgement</button>
     </div>
     <script src="dsapprove.js"></script>
 </body>
