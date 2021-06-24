@@ -44,12 +44,8 @@ const getReimbursements = () => {
                 'Cost',
                 'Event Type',
                 'Missed Work',
-//                'Work Justification',
-//                'Grade Format',
-                'Benefits Coordinator Approved',
-                'Department Head Approved',
-                'Direct Supervisor Approved',
-//                'Grade Upload'
+                'Proposed Reimbursement',
+                'User Reimbursement'
             ]
             // Headers
             for(h of rTableHeaders) {
@@ -99,20 +95,15 @@ const getReimbursements = () => {
                 missedWork.innerHTML = r.missedWork + ' hrs';
                 rTableRow.appendChild(missedWork);
 
-                // Benefits Coordinator Approval
-                let bcApprove = document.createElement('td');
-                bcApprove.innerHTML = r.bcApproval.approve;
-                rTableRow.appendChild(bcApprove);
+                // Proposed Reimbursement
+                let propReim = document.createElement('td');
+                propReim.innerHTML = r.event.eventCost * r.event.eventType.coverage;
+                rTableRow.appendChild(propReim);
 
-                // Department Head Approval
-                let dhApprove = document.createElement('td');
-                dhApprove.innerHTML = r.dhApproval.approve;
-                rTableRow.appendChild(dhApprove);
-
-                // Direct Supervisor Approval
-                let dsApprove = document.createElement('td');
-                dsApprove.innerHTML = r.dsApproval.approve;
-                rTableRow.appendChild(dsApprove);
+                // User Reimbursement
+                let userReim = document.createElement('td');
+                userReim.innerHTML = admin.user.reAmount;
+                rTableRow.appendChild(userReim);
 
                 rTable.append(rTableRow);
             }
