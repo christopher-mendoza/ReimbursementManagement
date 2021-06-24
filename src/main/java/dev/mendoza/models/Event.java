@@ -9,6 +9,7 @@ public class Event {
 	private String eventLocation;
 	private String eventDesc;
 	private Float eventCost;
+	private Float eventProposed;
 	private EventType eventType;
 	
 	public Event() {
@@ -74,6 +75,14 @@ public class Event {
 	public void setEventCost(Float eventCost) {
 		this.eventCost = eventCost;
 	}
+	
+	public Float getEventProposed() {
+		return eventProposed;
+	}
+
+	public void setEventProposed(Float eventProposed) {
+		this.eventProposed = eventProposed;
+	}
 
 	public EventType getEventType() {
 		return eventType;
@@ -91,6 +100,7 @@ public class Event {
 		result = prime * result + ((eventDate == null) ? 0 : eventDate.hashCode());
 		result = prime * result + ((eventDesc == null) ? 0 : eventDesc.hashCode());
 		result = prime * result + ((eventLocation == null) ? 0 : eventLocation.hashCode());
+		result = prime * result + ((eventProposed == null) ? 0 : eventProposed.hashCode());
 		result = prime * result + ((eventType == null) ? 0 : eventType.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
@@ -125,6 +135,11 @@ public class Event {
 				return false;
 		} else if (!eventLocation.equals(other.eventLocation))
 			return false;
+		if (eventProposed == null) {
+			if (other.eventProposed != null)
+				return false;
+		} else if (!eventProposed.equals(other.eventProposed))
+			return false;
 		if (eventType == null) {
 			if (other.eventType != null)
 				return false;
@@ -141,8 +156,11 @@ public class Event {
 	@Override
 	public String toString() {
 		return "Event [id=" + id + ", eventDate=" + eventDate + ", eventLocation=" + eventLocation + ", eventDesc="
-				+ eventDesc + ", eventCost=" + eventCost + ", eventType=" + eventType + "]";
+				+ eventDesc + ", eventCost=" + eventCost + ", eventProposed=" + eventProposed + ", eventType="
+				+ eventType + "]";
 	}
+	
+	
 	
 	
 }

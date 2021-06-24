@@ -27,7 +27,7 @@ public class EventDAO {
 	private Connection conn = JDBCConnection.getConnection();
 	
 	public boolean addEvent(Event e) {
-		String sql = "INSERT INTO events VALUES (default, ?, ?, ?, ?, ?) RETURNING *;";
+		String sql = "INSERT INTO events VALUES (default, ?, ?, ?, ?, 0, ?) RETURNING *;";
 		try {
 			CallableStatement cs = conn.prepareCall(sql);
 			cs.setDate(1, e.getEventDate());
@@ -64,6 +64,7 @@ public class EventDAO {
 				e.setEventLocation(rs.getString("event_location"));
 				e.setEventDesc(rs.getString("event_description"));
 				e.setEventCost(rs.getFloat("event_cost"));
+				e.setEventProposed(rs.getFloat("event_proposed_cost"));
 				// Add EventType Object
 				EventType eType = new EventType();
 				eType.setId(rs.getInt("event_type_id"));
@@ -117,6 +118,7 @@ public class EventDAO {
 				e.setEventLocation(rs.getString("event_location"));
 				e.setEventDesc(rs.getString("event_description"));
 				e.setEventCost(rs.getFloat("event_cost"));
+				e.setEventProposed(rs.getFloat("event_proposed_cost"));
 				// Add EventType Object
 				EventType eType = new EventType();
 				eType.setId(rs.getInt("event_type_id"));
