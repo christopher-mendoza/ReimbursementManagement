@@ -47,10 +47,10 @@ const getReimbursements = () => {
                 'Missed Work',
 //                'Work Justification',
                 'Grade Format',
+                'Grade Upload',
                 'Benefits Coordinator Approved',
                 'Department Head Approved',
-                'Direct Supervisor Approved',
-//                'Grade Upload'
+                'Direct Supervisor Approved'             
             ]
             // Headers
             for(h of rTableHeaders) {
@@ -98,6 +98,11 @@ const getReimbursements = () => {
                 let gradeFormat = document.createElement('td');
                 gradeFormat.innerHTML = r.gradingFormat.gFormatName;
                 rTableRow.appendChild(gradeFormat);
+
+                // Grade Upload
+                let gradeUpload = document.createElement('td');
+                gradeUpload.innerHTML = r.gUp.gradeUp;
+                rTableRow.appendChild(gradeUpload);
 
                 // Benefits Coordinator Approval
                 let bcApprove = document.createElement('td');

@@ -71,6 +71,12 @@ public class FrontControllerServlet extends HttpServlet {
 		public String reason;
 		public int id;
 	}
+	
+	class UserUpload {
+		public String grade;
+		public String passfail;
+		public int id;
+	}
 
 	Gson gson=  new GsonBuilder().setDateFormat("MM-dd-yyyy").create();
 	
@@ -337,6 +343,62 @@ public class FrontControllerServlet extends HttpServlet {
 			case "/ReimbursementManagement/userlist": {
 				System.out.println("Getting User List.");
 				response.getWriter().append(gson.toJson(rd));
+				break;
+			}
+			
+			// User Grade/Pres Submit
+			case "/ReimbursementManagement/usersubmit": {
+				System.out.println("Submitting User Upload.");
+				UserUpload uUpload = gson.fromJson(request.getReader(), UserUpload.class);
+				Reimbursement r = rs.getReimbursementById(uUpload.id);
+				GradeUpload gu = gus.getGradeUploadById(r.getgUp().getId());
+				System.out.println("grade: "  + uUpload.grade);
+				System.out.println("passfail: " + uUpload.passfail);
+				System.out.println("id: " + uUpload.id);
+				if(r.getGradingFormat().getgFormatName().equals("Letter Grading")) {
+					switch(uUpload.grade) {
+						// A
+						case "0": {
+							gus.changeGradeUpload(gu, "A");
+							break;
+						}
+						// B
+						case "1": {
+							gus.changeGradeUpload(gu, "B");
+							break;
+						}
+						// C
+						case "2": {
+							gus.changeGradeUpload(gu, "C");
+							break;
+						}
+						// D
+						case "3": {
+							gus.changeGradeUpload(gu, "D");
+							break;
+						}
+						// F
+						case "4": {
+							gus.changeGradeUpload(gu, "F");
+							break;
+						}
+					}
+				}
+				else if(r.getGradingFormat().getgFormatName().equals("Pass/Fail")) {
+					switch(uUpload.passfail) {
+						// Pass
+						case "0": {
+							gus.changeGradeUpload(gu, "Pass");
+							break;
+						}
+						// Fail
+						case "1": {
+							gus.changeGradeUpload(gu, "Fail");
+							break;
+						}
+					}
+				}
+				response.getWriter().append("user.html");
 				break;
 			}
 			

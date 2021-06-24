@@ -17,17 +17,24 @@
 
     </div>
     <div id="userformDiv" hidden>
-        <select id="grade" hidden>
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-            <option value="D">D</option>
-            <option value="F">F</option>
-        </select>
-        <select id="passfail" hidden>
-            <option value="pass">Pass</option>
-            <option value="fail">Fail</option>
-        </select>
+        <div id="gradeDiv" hidden>
+            Grade:
+            <select id="grade">
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="F">F</option>
+            </select>
+        </div>
+        <div id="passfailDiv" hidden>
+            Pass or Fail:
+            <select id="passfail">
+                <option value="pass">Pass</option>
+                <option value="fail">Fail</option>
+            </select>
+        </div>
+        
     </div>
     <div id="btnholder">
         <button type="button" id="backbtn">Go Back</button>

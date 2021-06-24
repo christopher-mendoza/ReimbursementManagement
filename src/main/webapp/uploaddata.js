@@ -15,6 +15,9 @@ let userformDiv = document.getElementById('userformDiv');
 let grade = document.getElementById('grade');
 let passfail = document.getElementById('passfail');
 
+let gradeDiv = document.getElementById('gradeDiv');
+let passfailDiv = document.getElementById('passfailDiv');
+
 const getReimbursements = () => {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = receiveData;
@@ -137,11 +140,44 @@ function showReimbursement() {
 
         rTable.append(rTableRow);
         tableDiv.append(rTable);
+
+        // Create user form
+        userformDiv.hidden = false;
+        if(list.gradingFormat.gFormatName == 'Letter Grading') {
+            gradeDiv.hidden = false;
+        }
+        else {
+            passfailDiv.hidden = false;
+        }
+    }
+    else {
+        uploadbtn.hidden = true;
+        userformDiv.hidden = true;
+        gradeDiv.hidden = true;
+        passfailDiv.hidden = true;
     }
 }
 
 function uploadGrade() {
     console.log("upload");
+    let userGrade = {
+        grade: grade.selectedIndex,
+        passfail: passfail.selectedIndex,
+        id: jsonObject.list[dropDown.selectedIndex - 1].id
+    }
+    let userJson = JSON.stringify(userGrade);
+    let xhttp = new XMLHttpRequest();
+    xhttp.open('POST', url + '/usersubmit');
+    xhttp.send(userJson);
+    xhttp.onreadystatechange = receiveData;
+
+    function receiveData() {
+        if(xhttp.readyState == 4) {
+            if(xhttp.status == 200) {
+                window.location.href = xhttp.responseText;
+            }
+        }
+    }
 }
 
 function goBack() {
