@@ -34,4 +34,9 @@ public class DHApprovalServiceImpl implements DHApprovalService {
 		return dhList.get(dhList.size() - 1);
 	}
 
+	@Override
+	public boolean changeDHReason(DHApproval a, String reason) {
+		return adao.changeDHReason(a, reason);
+	}
+
 }

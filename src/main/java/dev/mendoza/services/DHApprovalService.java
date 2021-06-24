@@ -10,4 +10,5 @@ public interface DHApprovalService {
 	List<DHApproval> getAllDHApprovals();
 	DHApproval getLatestDHApproval(List<DHApproval> dhList);
 	boolean changeDHApprove(DHApproval a);
+	boolean changeDHReason(DHApproval a, String reason);
 }

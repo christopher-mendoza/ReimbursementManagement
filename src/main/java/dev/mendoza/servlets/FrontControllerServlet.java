@@ -65,6 +65,12 @@ public class FrontControllerServlet extends HttpServlet {
 		public String reason;
 		public int id;
 	}
+	
+	class DHSubmit {
+		public String judgement;
+		public String reason;
+		public int id;
+	}
 
 	Gson gson=  new GsonBuilder().setDateFormat("MM-dd-yyyy").create();
 	
@@ -98,7 +104,9 @@ public class FrontControllerServlet extends HttpServlet {
 				// Benefits Coordinator List
 				if(u.getBcAdmin() == true) {
 					for(int i = 0; i < l.size(); i++) {
-						if((l.get(i).getBcApproval().getApprove() == true)) {
+						if((l.get(i).getBcApproval().getApprove() == true)
+								|| (l.get(i).getDhApproval().getApprove() == false)
+								|| (l.get(i).getDsApproval().getApprove() == false)) {
 							l.remove(i);
 							i = -1;
 						}
@@ -109,7 +117,8 @@ public class FrontControllerServlet extends HttpServlet {
 				else if(u.getDhAdmin() == true) {
 					for(int i = 0; i < l.size(); i++) {
 						if((!l.get(i).getDhApproval().getName().equals(u.getUsername())) 
-								|| (l.get(i).getDhApproval().getApprove() == true)) {
+								|| (l.get(i).getDhApproval().getApprove() == true)
+								|| (l.get(i).getDsApproval().getApprove() == false && u.getDsAdmin() == false)) {
 							l.remove(i);
 							i = -1;
 						}
@@ -158,14 +167,52 @@ public class FrontControllerServlet extends HttpServlet {
 					System.out.println("Received Reject for id: " + dsSubmit.id);
 					dss.changeDSReason(directSuper, dsSubmit.reason);
 				}
+				// Submitted Accept
 				else {
 					System.out.println("Received Accept for id: " + dsSubmit.id);
 					dss.changeDSApprove(directSuper);
 					dss.changeDSReason(directSuper, "");
 				}
-				System.out.println(dsSubmit.judgement);
-				System.out.println(dsSubmit.reason);
-				System.out.println("id: " + dsSubmit.id);
+				response.getWriter().append("admin.html");
+				break;
+			}
+			
+			// Department Head Approve Page
+			case "/ReimbursementManagement/dhapprove": {
+				System.out.println("Inside Department Head Approve Page.");
+				response.getWriter().append("dhapprove.html");
+				break;
+			}
+			
+			// Department Head List
+			case "/ReimbursementManagement/dhlist": {
+				System.out.println("Getting Department Head List.");
+				response.getWriter().append(gson.toJson(rd));
+				break;
+			}
+			
+			// Department Head Submit Judgement
+			case "/ReimbursementManagement/dhsubmit": {
+				System.out.println("Submitting Department Head Judgement.");
+				DHSubmit dhSubmit = gson.fromJson(request.getReader(), DHSubmit.class);
+				Reimbursement r = rs.getReimbursementById(dhSubmit.id);
+				DHApproval departHead = dhs.getDHApprovalById(r.getDhApproval().getId());
+				// Submitted Reject
+				if(dhSubmit.judgement.equals("1")) {
+					System.out.println("Received Reject for id: " + dhSubmit.id);
+					dhs.changeDHReason(departHead, dhSubmit.reason);
+				}
+				// Submitted Accept
+				else {
+					System.out.println("Received Accept for id: " + dhSubmit.id);
+					if(u.getDsAdmin() == true)
+					{
+						DSApproval directSuper = dss.getDSApprovalById(r.getDsApproval().getId());
+						dss.changeDSApprove(directSuper);
+					}
+					dhs.changeDHApprove(departHead);
+					dhs.changeDHReason(departHead, "");
+				}
 				response.getWriter().append("admin.html");
 				break;
 			}

@@ -126,6 +126,7 @@ public class ReimbursementDAO {
 				DHApproval dh = new DHApproval();
 				dh.setId(rs.getInt("dh_approval_id"));
 				dh.setName(rs.getString("dh_name"));
+				dh.setReason(rs.getString("dh_reason"));
 				dh.setApprove(rs.getBoolean("dh_approved"));
 				r.setDhApproval(dh);
 				// Add BC Approval
@@ -211,6 +212,7 @@ public class ReimbursementDAO {
 				DHApproval dh = new DHApproval();
 				dh.setId(rs.getInt("dh_approval_id"));
 				dh.setName(rs.getString("dh_name"));
+				dh.setReason(rs.getString("dh_reason"));
 				dh.setApprove(rs.getBoolean("dh_approved"));
 				r.setDhApproval(dh);
 				// Add BC Approval

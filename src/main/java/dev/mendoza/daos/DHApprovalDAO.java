@@ -15,6 +15,7 @@ import dev.mendoza.utils.JDBCConnection;
 public class DHApproval {
 	private Integer id;
 	private String name;
+	private String reason;
 	private Boolean approve;
  */
 
@@ -22,7 +23,7 @@ public class DHApprovalDAO {
 	private Connection conn = JDBCConnection.getConnection();
 	
 	public boolean addDHApproval(DHApproval approve) {
-		String sql = "INSERT INTO dh_approvals VALUES (default, ?, ?) RETURNING *;";
+		String sql = "INSERT INTO dh_approvals VALUES (default, ?, '', ?) RETURNING *;";
 		try {
 			CallableStatement cs = conn.prepareCall(sql);
 			cs.setString(1, approve.getName());
@@ -52,6 +53,7 @@ public class DHApprovalDAO {
 				DHApproval a = new DHApproval();
 				a.setId(rs.getInt("dh_approval_id"));
 				a.setName(rs.getString("dh_name"));
+				a.setReason(rs.getString("dh_reason"));
 				a.setApprove(rs.getBoolean("dh_approved"));
 				return a;
 			}
@@ -72,6 +74,7 @@ public class DHApprovalDAO {
 				DHApproval a = new DHApproval();
 				a.setId(rs.getInt("dh_approval_id"));
 				a.setName(rs.getString("dh_name"));
+				a.setReason(rs.getString("dh_reason"));
 				a.setApprove(rs.getBoolean("dh_approved"));
 				dhApprovals.add(a);
 			}
@@ -94,6 +97,23 @@ public class DHApprovalDAO {
 			return true;
 		}
 		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean changeDHReason(DHApproval a, String reason) {
+		String sql = "UPDATE dh_approvals SET dh_reason = ? " +
+					 "WHERE dh_approval_id = ?;";
+		try {
+			CallableStatement cs = conn.prepareCall(sql);
+			cs.setString(1, reason);
+			cs.setInt(2, a.getId());
+			cs.execute();
+			cs.close();
+			return true;
+		}
+		catch(SQLException e) {
 			e.printStackTrace();
 		}
 		return false;

@@ -3,6 +3,7 @@ package dev.mendoza.models;
 public class DHApproval {
 	private Integer id;
 	private String name;
+	private String reason;
 	private Boolean approve;
 	
 	public DHApproval() {
@@ -15,11 +16,18 @@ public class DHApproval {
 		this.approve = approve;
 	}
 
+	public DHApproval(String name, String reason, Boolean approve) {
+		super();
+		this.name = name;
+		this.reason = reason;
+		this.approve = approve;
+	}
 
-	public DHApproval(Integer id, String name, Boolean approve) {
+	public DHApproval(Integer id, String name, String reason, Boolean approve) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.reason = reason;
 		this.approve = approve;
 	}
 
@@ -38,6 +46,16 @@ public class DHApproval {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
 
 	public Boolean getApprove() {
 		return approve;
@@ -54,6 +72,7 @@ public class DHApproval {
 		result = prime * result + ((approve == null) ? 0 : approve.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((reason == null) ? 0 : reason.hashCode());
 		return result;
 	}
 
@@ -81,13 +100,19 @@ public class DHApproval {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
+		if (reason == null) {
+			if (other.reason != null)
+				return false;
+		} else if (!reason.equals(other.reason))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "DHApproval [id=" + id + ", name=" + name + ", approve=" + approve + "]";
+		return "DHApproval [id=" + id + ", name=" + name + ", reason=" + reason + ", approve=" + approve + "]";
 	}
-
+	
+	
 	
 }
