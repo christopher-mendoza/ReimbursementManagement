@@ -161,7 +161,37 @@ function showReason() {
 }
 
 function submitJudgement() {
-    console.log("submit");
+    var reasonValue = document.getElementById('reasondesc').value;
+    var changeValue = document.getElementById('change').value;
+
+    let bcSubmit = {
+        judgement: judgement.selectedIndex,
+        reason: reasonValue,
+        change: changeValue,
+        id: jsonObject.list[dropDown.selectedIndex - 1].id
+    }
+    if(reasonValue == '') {
+        alert('Please add a reason!');
+    }
+    else if(judgement.selectedIndex == 0 && (changeValue < 0 || changeValue == '')) {
+        alert('Please add a valid reimbursement amount!');
+    }
+    
+    else {
+        let bcJson = JSON.stringify(bcSubmit);
+        let xhttp = new XMLHttpRequest();
+        xhttp.open('POST', url + '/bcsubmit');
+        xhttp.send(bcJson);
+        xhttp.onreadystatechange = receiveData;
+
+        function receiveData() {
+            if(xhttp.readyState == 4) {
+                if(xhttp.status == 200) {
+                    window.location.href = xhttp.responseText;
+                }
+            }
+        }
+    }
 }
 
 function goBack() {

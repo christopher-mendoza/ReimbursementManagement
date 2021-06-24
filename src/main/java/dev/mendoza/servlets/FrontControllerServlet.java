@@ -77,6 +77,13 @@ public class FrontControllerServlet extends HttpServlet {
 		public String passfail;
 		public int id;
 	}
+	
+	class BCSubmit {
+		public String judgement;
+		public String reason;
+		public float change;
+		public int id;
+	}
 
 	Gson gson=  new GsonBuilder().setDateFormat("MM-dd-yyyy").create();
 	
@@ -234,6 +241,29 @@ public class FrontControllerServlet extends HttpServlet {
 			case "/ReimbursementManagement/bclist": {
 				System.out.println("Getting Benefits Coordinator List.");
 				response.getWriter().append(gson.toJson(rd));
+				break;
+			}
+			
+			// Benefits Coordinator Submit Judgement
+			case "/ReimbursementManagement/bcsubmit": {
+				System.out.println("Submitting Benefits Coordinator Judgement.");
+				BCSubmit bcSubmit = gson.fromJson(request.getReader(), BCSubmit.class);
+				Reimbursement r = rs.getReimbursementById(bcSubmit.id);
+				BCApproval benCo = bcs.getBCApprovalById(r.getBcApproval().getId());
+				// Submitted Reject
+				if(bcSubmit.judgement.equals("1")) {
+					System.out.println("Received Reject for id: " + bcSubmit.id);
+					bcs.changeBCReason(benCo, bcSubmit.reason);
+				}
+				// Submitted Accept
+				else {
+					System.out.println("Received Accept for id: " + bcSubmit.id);
+				}
+				System.out.println(bcSubmit.id);
+				System.out.println(bcSubmit.judgement);
+				System.out.println(bcSubmit.reason);
+				System.out.println(bcSubmit.change);
+				response.getWriter().append("admin.html");
 				break;
 			}
 			
