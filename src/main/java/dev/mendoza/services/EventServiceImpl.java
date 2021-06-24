@@ -35,4 +35,9 @@ public class EventServiceImpl implements EventService {
 		return eList.get(eList.size() - 1);
 	}
 
+	@Override
+	public boolean changeProposedAmt(Event e, float newAmt) {
+		return edao.changeProposedAmt(e, newAmt);
+	}
+
 }

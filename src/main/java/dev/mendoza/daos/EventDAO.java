@@ -135,4 +135,21 @@ public class EventDAO {
 		return null;
 	}
 	
+	public boolean changeProposedAmt(Event e, float newAmt) {
+		String sql = "UPDATE events SET event_proposed_cost = ? " +
+					 "WHERE event_id = ?;";
+		try {
+			CallableStatement cs = conn.prepareCall(sql);
+			cs.setFloat(1, newAmt);
+			cs.setInt(2, e.getId());
+			cs.execute();
+			cs.close();
+			return true;
+		}
+		catch(SQLException ex) {
+			ex.printStackTrace();
+		}
+		return false;
+	}
+	
 }

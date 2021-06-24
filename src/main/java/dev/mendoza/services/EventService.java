@@ -11,4 +11,6 @@ public interface EventService {
 	List<Event> getAllEvents();
 	Event getLatestEvent(List<Event> eList);
 	EventType getEventTypeByEventType(String eventType);
+	boolean changeProposedAmt(Event e, float newAmt);
+	
 }

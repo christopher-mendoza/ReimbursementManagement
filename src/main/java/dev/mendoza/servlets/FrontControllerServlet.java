@@ -260,10 +260,14 @@ public class FrontControllerServlet extends HttpServlet {
 					System.out.println("Received Accept for id: " + bcSubmit.id);
 //					bcs.changeBCReason(benCo, bcSubmit.reason);
 //					bcs.changeBCApproval(benCo);
-					System.out.println(us.getUserByUsername(r.getUsername()).getReAmount() + bcSubmit.change);
+					User employee = us.getUserByUsername(r.getUsername());
+					System.out.println(employee.getReAmount() + bcSubmit.change);
 					if((us.getUserByUsername(r.getUsername()).getReAmount() + bcSubmit.change) > 1000.00f) {
-						
+						bcs.changeBCExceed(benCo);
 					}
+					bcs.changeBCReason(benCo, bcSubmit.reason);
+					es.changeProposedAmt(r.getEvent(), bcSubmit.change);
+					bcs.changeBCApproval(benCo);
 				}
 				response.getWriter().append("admin.html");
 				break;
