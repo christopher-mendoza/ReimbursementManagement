@@ -6,6 +6,9 @@ logoutbtn.addEventListener('click', logOut);
 let addbtn = document.getElementById('addbtn');
 addbtn.addEventListener('click', addReimbursements);
 
+let uploadbtn = document.getElementById('uploadbtn');
+uploadbtn.addEventListener('click', uploadData);
+
 let userPage = document.getElementById('user');
 
 const getReimbursements = () => {
@@ -17,13 +20,15 @@ const getReimbursements = () => {
     
     function receiveData() {
         if(xhttp.readyState == 4 && xhttp.status == 200) {
-            let res = xhttp.response.replace("login.html", "");
+            console.log(xhttp.response);
+            let res = xhttp.response;
             user = JSON.parse(res);
             // get name
             let greet = document.createElement("h3");
             greet.innerHTML = "Hello " + user.user.name + "!";
             console.log(user.user.name);
             userPage.append(greet);
+            var count = 1;
 
             // get reimbursement amt
             let amount = document.createElement("h3");
@@ -34,18 +39,18 @@ const getReimbursements = () => {
             let rTable = document.createElement('table');
             let rTableRow = document.createElement('tr');
             let rTableHeaders = [ 
-                'Name',
+                '#',
                 'Event Date',
                 'Location',
                 'Cost',
                 'Event Type',
                 'Missed Work',
-                'Work Justification',
+//                'Work Justification',
                 'Grade Format',
                 'Benefits Coordinator Approved',
                 'Department Head Approved',
                 'Direct Supervisor Approved',
-                'Grade Upload'
+//                'Grade Upload'
             ]
             // Headers
             for(h of rTableHeaders) {
@@ -54,15 +59,15 @@ const getReimbursements = () => {
                 rTableRow.appendChild(th);
             }
             rTable.append(rTableRow);
-
+           
             // Reimbursement Rows
             for(r of user.list) {
                 rTableRow = document.createElement('tr');
 
-                // Name
-                let name = document.createElement('td');
-                name.innerHTML = r.name;
-                rTableRow.appendChild(name);
+                let number = document.createElement('td');
+                number.innerHTML = count;
+                count++;
+                rTableRow.appendChild(number);
 
                 //Event Date
                 let eventDate = document.createElement('td');
@@ -78,6 +83,36 @@ const getReimbursements = () => {
                 let eventCost = document.createElement('td');
                 eventCost.innerHTML = '$' + r.event.eventCost;
                 rTableRow.appendChild(eventCost);
+
+                // Event Type
+                let eventType = document.createElement('td');
+                eventType.innerHTML = r.event.eventType.type;
+                rTableRow.appendChild(eventType);
+
+                // Missed Work
+                let missedWork = document.createElement('td');
+                missedWork.innerHTML = r.missedWork + ' hrs';
+                rTableRow.appendChild(missedWork);
+
+                // Grade Format
+                let gradeFormat = document.createElement('td');
+                gradeFormat.innerHTML = r.gradingFormat.gFormatName;
+                rTableRow.appendChild(gradeFormat);
+
+                // Benefits Coordinator Approval
+                let bcApprove = document.createElement('td');
+                bcApprove.innerHTML = r.bcApproval.approve;
+                rTableRow.appendChild(bcApprove);
+
+                // Department Head Approval
+                let dhApprove = document.createElement('td');
+                dhApprove.innerHTML = r.dhApproval.approve;
+                rTableRow.appendChild(dhApprove);
+
+                // Direct Supervisor Approval
+                let dsApprove = document.createElement('td');
+                dsApprove.innerHTML = r.dsApproval.approve;
+                rTableRow.appendChild(dsApprove);
 
                 rTable.append(rTableRow);
             }
@@ -112,5 +147,15 @@ function logOut() {
         console.log('Switching to login.html');
         window.location.href = xhttp.responseText;
     }
+}
 
+function uploadData() {
+    let xhttp = new XMLHttpRequest();
+    xhttp.open('POST', url + '/userupload');
+    xhttp.send();
+    xhttp.onreadystatechange = receiveData;
+
+    function receiveData() {
+        window.location.href = xhttp.responseText;
+    }
 }

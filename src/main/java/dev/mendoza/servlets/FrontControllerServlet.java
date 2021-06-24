@@ -88,7 +88,6 @@ public class FrontControllerServlet extends HttpServlet {
 			// Admin Main
 			case "/ReimbursementManagement/adminmain": {
 				System.out.println("Inside Admin Main.");
-				//ReimbursementServiceImpl rs = new ReimbursementServiceImpl();
 				l = rs.getAllReimbursements();
 				// Benefits Coordinator List
 				if(u.getBcAdmin() == true) {
@@ -126,42 +125,24 @@ public class FrontControllerServlet extends HttpServlet {
 				response.getWriter().append(gson.toJson(rd));
 				break;
 			}
-//			case "/ReimbursementManagement/home": {
-//				response.getWriter().append("login.html");
-//				break;
-//			}
-//			case "/ReimbursementManagement/invalidate": {
-//				session.invalidate();
-//				break;
-//			}
-//			case "/ReimbursementManagement/id": {
-//				response.getWriter().append("\n" + session.getId());
-//				break;
-//			}
-//			case "/ReimbursementManagement": {
-//				
-//				break;
-//			}
-//			case "/ReimbursementManagement/adminlogin": {
-//				System.out.println("admin login");
-//				LoginAttempt login = this.gson.fromJson(request.getReader(), LoginAttempt.class);
-//				UserServiceImpl us = new UserServiceImpl();
-//				User u = us.getUserByUsername(login.un);
-//				if(u != null) {
-//					System.out.println("Admin " + u.getName() + " has logged in.");
-//					session.setAttribute("currentUser", u);
-//					response.getWriter().append("index.html");
-//				}
-//				else {
-//					System.out.println("Failed admin login attempt.");
-//				}
-//				break;
-//			}
+			
+			// Direct Supervisor Approve Page
+			case "/ReimbursementManagement/dsapprove": {
+				System.out.println("Inside Direct Supervisor Approve Page.");
+				response.getWriter().append("dsapprove.html");
+				break;
+			}
+			
+			// Direct Supervisor List
+			case "/ReimbursementManagement/dslist": {
+				System.out.println("Getting Direct Supervisor List.");
+				response.getWriter().append(gson.toJson(rd));
+				break;
+			}
 			
 			// User Main
 			case "/ReimbursementManagement/usermain": {
 				System.out.println("Inside User Main.");
-				//ReimbursementServiceImpl rs = new ReimbursementServiceImpl();
 				l = rs.getAllReimbursements();
 				for(int i = 0; i < l.size(); i++) {
 					if(!l.get(i).getUsername().equals(u.getUsername())) {
@@ -257,9 +238,21 @@ public class FrontControllerServlet extends HttpServlet {
 			}
 			
 			// Cancel Reimbursement
-			case "/ReimbursementManagement/cancelapp": {
-				System.out.println("Cancelled Reimbursement Application.");
-				response.getWriter().append("user.html");
+			case "/ReimbursementManagement/cancel": {
+				System.out.println("Cancelled Task.");
+				if(u.getBcAdmin() || u.getDhAdmin() || u.getDsAdmin()) {
+					response.getWriter().append("admin.html");
+				}
+				else {
+					response.getWriter().append("user.html");
+				}
+				break;
+			}
+			
+			// Upload Data
+			case "/ReimbursementManagement/userupload": {
+				System.out.println("Inside User Upload.");
+				response.getWriter().append("uploaddata.html");
 				break;
 			}
 			
@@ -267,7 +260,6 @@ public class FrontControllerServlet extends HttpServlet {
 			case "/ReimbursementManagement/login": {
 				System.out.println("Got login");
 				LoginAttempt login = gson.fromJson(request.getReader(), LoginAttempt.class);
-				//UserServiceImpl us = new UserServiceImpl();
 				u = us.getUserByUsername(login.un);
 				if(u == null) {
 					System.out.println("Failed admin login attempt.");
@@ -313,61 +305,5 @@ public class FrontControllerServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		doGet(request, response);
-//		String uri = request.getRequestURI();
-//		response.setHeader("Access-Control-Allow-Origin", "*");
-//		response.setHeader("Content-Type", "application/json");
-//		session = request.getSession();
-//		System.out.println("dopost: " + session.getId());
-//		switch(uri) {
-//			// Logging In
-//			case "/ReimbursementManagement/login": {
-//				System.out.println("Got login");
-//
-//				
-//				LoginAttempt login = gson.fromJson(request.getReader(), LoginAttempt.class);
-//				UserServiceImpl us = new UserServiceImpl();
-//				User u = us.getUserByUsername(login.un);
-//				if(u == null) {
-//					System.out.println("Failed admin login attempt.");
-//					break;
-//				}
-//				if(u.getUsername().equals(login.un) && u.getPassword().equals(login.pw)) {
-//					System.out.println("User, " + u.getName() + " has logged in.");
-//					if(u.getBcAdmin() || u.getDhAdmin() || u.getDsAdmin()) {
-//						
-//						session.setAttribute("current_user", u);
-//						System.out.println("Going to Admin page.");
-//						System.out.println(session.getId());
-//						response.getWriter().append("admin.html");
-//					}
-//					else {
-//						session.setAttribute("current_user", u);
-//						System.out.println("Going to User page.");
-//						response.getWriter().append("user.html");
-//					}
-//				}
-//				else {
-//					System.out.println("Failed admin login attempt.");
-//					session.invalidate();
-//				}
-//				break;
-//			}
-//			
-//			// Logging Out
-//			case "/ReimbursementManagement/logout": {
-//				System.out.println("Logging out.");
-//				session.invalidate();
-//				response.getWriter().append("login.html");
-//				
-//				break;
-//			}
-//			
-//			// Default Case
-//			default: {
-//				System.out.println("Default POST Case.");
-//				response.sendError(418, "BRB Making tea.");
-//				break;
-//			}
-//		}
 	}
 }

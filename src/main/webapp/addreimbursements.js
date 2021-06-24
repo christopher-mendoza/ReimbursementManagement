@@ -87,7 +87,7 @@ function submitFunction() {
 
 function goBack() {
     let xhttp = new XMLHttpRequest();
-    xhttp.open("POST", url + "/cancelapp");
+    xhttp.open("POST", url + "/cancel");
     xhttp.send();
     xhttp.onreadystatechange = receiveData;
 
