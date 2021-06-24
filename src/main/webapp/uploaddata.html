@@ -8,11 +8,26 @@
 </head>
 <body>
     <h2>Welcome to the User Upload Page!</h2>
-    <div id="dropdown">
+    <div id="dropdownDiv">
+        <select id='dropDown' onchange="showReimbursement()">
+            <option value=0>--</option>
+        </select>
+    </div>
+    <div id="tableDiv">
 
     </div>
-    <div id="reimbursement">
-
+    <div id="userformDiv" hidden>
+        <select id="grade" hidden>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="F">F</option>
+        </select>
+        <select id="passfail" hidden>
+            <option value="pass">Pass</option>
+            <option value="fail">Fail</option>
+        </select>
     </div>
     <div id="btnholder">
         <button type="button" id="backbtn">Go Back</button>

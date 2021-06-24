@@ -333,6 +333,13 @@ public class FrontControllerServlet extends HttpServlet {
 				break;
 			}
 			
+			// User List
+			case "/ReimbursementManagement/userlist": {
+				System.out.println("Getting User List.");
+				response.getWriter().append(gson.toJson(rd));
+				break;
+			}
+			
 			// Login
 			case "/ReimbursementManagement/login": {
 				System.out.println("Got login");
