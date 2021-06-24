@@ -136,6 +136,12 @@ function bcApprove() {
     console.log("bc");
     let xhttp = new XMLHttpRequest();
     xhttp.open('POST', url + '/bcapprove');
+    xhttp.send();
+    xhttp.onreadystatechange = receiveData;
+
+    function receiveData() {
+        window.location.href = xhttp.responseText;
+    }
 }
 
 function dhApprove() {

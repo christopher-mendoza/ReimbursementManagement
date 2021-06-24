@@ -223,6 +223,20 @@ public class FrontControllerServlet extends HttpServlet {
 				break;
 			}
 			
+			// Benefits Coordinate Approve Page
+			case "/ReimbursementManagement/bcapprove": {
+				System.out.println("Inside Benefits Coordinator Approve Page.");
+				response.getWriter().append("bcapprove.html");
+				break;
+			}
+			
+			// Benefits Coordinator List
+			case "/ReimbursementManagement/bclist": {
+				System.out.println("Getting Benefits Coordinator List.");
+				response.getWriter().append(gson.toJson(rd));
+				break;
+			}
+			
 			// User Main
 			case "/ReimbursementManagement/usermain": {
 				System.out.println("Inside User Main.");

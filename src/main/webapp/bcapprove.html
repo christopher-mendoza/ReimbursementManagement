@@ -7,7 +7,31 @@
     <title>Benefits Coordinator Approve</title>
 </head>
 <body>
-    
+    <h2>Welcome to the Benefits Coordinator Approval Page</h2>
+    <div id="dropdownDiv">
+        <select id='dropDown' onchange="showReimbursement()">
+            <option value=0>--</option>
+        </select>
+    </div>
+    <div id="tableDiv">
+
+    </div>
+    <div id="adminformDiv" hidden>
+        <select id="judgement" onchange="showReason()">
+            <option value="true">Accept</option>
+            <option value="false">Reject</option>
+        </select>
+        <div id="reasonDiv">
+            Reason: <input type="text" id="reasondesc"/>
+            <div id="changeDiv" >
+                Change Reimbursement: <input type="number" id="change">
+            </div>
+        </div>
+    </div>
+    <div id="btnholder">
+        <button type="button" id="backbtn">Go Back</button>
+        <button type="button" id="submitbtn" hidden>Submit Judgement</button>
+    </div>
     <script src="bcapprove.js"></script>
 </body>
 </html>

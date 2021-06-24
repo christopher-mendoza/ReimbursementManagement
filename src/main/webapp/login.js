@@ -28,6 +28,9 @@ function loginFunction() {
             if(xhttp.readyState == 4) {
                 if(xhttp.status == 200) {
                     console.log(xhttp.responseText);
+                    if(xhttp.responseText == '') {
+                        alert('Bad login!');
+                    }
                     window.location.href = xhttp.responseText;
                 }
             }
