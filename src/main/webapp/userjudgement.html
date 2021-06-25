@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Judgement</title>
+</head>
+<body>
+    <h2>Welcome to the User Accept/Cancel Reimbursements Menu!</h2>
+    <div id="dropdownDiv">
+        <select id='dropDown' onchange="showReimbursement()">
+            <option value=0>--</option>
+        </select>
+    </div>
+    <div id="tableDiv">
+
+    </div>
+    <div id="adminformDiv" hidden>
+        <select id="judgement">
+            <option value="true">Accept</option>
+            <option value="false">Cancel</option>
+        </select>
+    </div>
+    <div id="btnholder">
+        <button type="button" id="backbtn">Go Back</button>
+        <button type="button" id="submitbtn" hidden>Confirm</button>
+    </div>
+    <script src="userjudgement.js"></script>
+</body>
+</html>

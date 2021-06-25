@@ -9,6 +9,9 @@ addbtn.addEventListener('click', addReimbursements);
 let uploadbtn = document.getElementById('uploadbtn');
 uploadbtn.addEventListener('click', uploadData);
 
+let judgementbtn = document.getElementById('judgementbtn');
+judgementbtn.addEventListener('click', goToJudgement);
+
 let userPage = document.getElementById('user');
 
 const getReimbursements = () => {
@@ -32,7 +35,7 @@ const getReimbursements = () => {
 
             // get reimbursement amt
             let amount = document.createElement("h3");
-            amount.innerHTML = "Projected Reimbursement Total: $" + user.user.reAmount;
+            amount.innerHTML = "Reimbursement Total: $" + user.user.reAmount;
             userPage.append(amount);
 
             // get reimbursements
@@ -50,7 +53,8 @@ const getReimbursements = () => {
                 'Grade Upload',
                 'Benefits Coordinator Approved',
                 'Department Head Approved',
-                'Direct Supervisor Approved'             
+                'Direct Supervisor Approved',
+                'Exceed?'
             ]
             // Headers
             for(h of rTableHeaders) {
@@ -119,6 +123,11 @@ const getReimbursements = () => {
                 dsApprove.innerHTML = r.dsApproval.approve;
                 rTableRow.appendChild(dsApprove);
 
+                // Exceed
+                let exceed = document.createElement('td');
+                exceed.innerHTML = r.bcApproval.exceed;
+                rTableRow.appendChild(exceed);
+
                 rTable.append(rTableRow);
             }
             userPage.append(rTable);
@@ -157,6 +166,17 @@ function logOut() {
 function uploadData() {
     let xhttp = new XMLHttpRequest();
     xhttp.open('POST', url + '/userupload');
+    xhttp.send();
+    xhttp.onreadystatechange = receiveData;
+
+    function receiveData() {
+        window.location.href = xhttp.responseText;
+    }
+}
+
+function goToJudgement() {
+    let xhttp = new XMLHttpRequest();
+    xhttp.open('POST', url + '/userjudgement');
     xhttp.send();
     xhttp.onreadystatechange = receiveData;
 

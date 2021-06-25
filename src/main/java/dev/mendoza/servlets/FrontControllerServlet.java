@@ -84,6 +84,11 @@ public class FrontControllerServlet extends HttpServlet {
 		public float change;
 		public int id;
 	}
+	
+	class UserVerdict {
+		public String judgement;
+		public int id;
+	}
 
 	Gson gson=  new GsonBuilder().setDateFormat("MM-dd-yyyy").create();
 	
@@ -258,11 +263,8 @@ public class FrontControllerServlet extends HttpServlet {
 				// Submitted Accept
 				else {
 					System.out.println("Received Accept for id: " + bcSubmit.id);
-//					bcs.changeBCReason(benCo, bcSubmit.reason);
-//					bcs.changeBCApproval(benCo);
 					User employee = us.getUserByUsername(r.getUsername());
-					System.out.println(employee.getReAmount() + bcSubmit.change);
-					if((us.getUserByUsername(r.getUsername()).getReAmount() + bcSubmit.change) > 1000.00f) {
+					if((employee.getReAmount() + bcSubmit.change) > 1000.00f) {
 						bcs.changeBCExceed(benCo);
 					}
 					bcs.changeBCReason(benCo, bcSubmit.reason);
@@ -448,6 +450,24 @@ public class FrontControllerServlet extends HttpServlet {
 						}
 					}
 				}
+				response.getWriter().append("user.html");
+				break;
+			}
+			
+			// User Cancel/Accept Reimburses
+			case "/ReimbursementManagement/userjudgement": {
+				System.out.println("Inside User Judgement.");
+				response.getWriter().append("userjudgement.html");
+				break;
+			}
+			
+			// User Reimbursement Verdict
+			case "/ReimbursementManagement/userverdict": {
+				System.out.println("Submitting User Verdict.");
+				UserVerdict userV = gson.fromJson(request.getReader(), UserVerdict.class);
+				Reimbursement r = rs.getReimbursementById(userV.id);
+				System.out.println(userV.id);
+				System.out.println(userV.judgement);
 				response.getWriter().append("user.html");
 				break;
 			}
