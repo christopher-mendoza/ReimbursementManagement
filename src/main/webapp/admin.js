@@ -97,12 +97,12 @@ const getReimbursements = () => {
 
                 // Proposed Reimbursement
                 let propReim = document.createElement('td');
-                propReim.innerHTML = r.event.eventCost * r.event.eventType.coverage;
+                propReim.innerHTML = '$' + (r.event.eventCost * r.event.eventType.coverage);
                 rTableRow.appendChild(propReim);
 
                 // User Reimbursement
                 let userReim = document.createElement('td');
-                userReim.innerHTML = admin.user.reAmount;
+                userReim.innerHTML = '$' + admin.user.reAmount;
                 rTableRow.appendChild(userReim);
 
                 rTable.append(rTableRow);

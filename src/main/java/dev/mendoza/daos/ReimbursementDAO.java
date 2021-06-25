@@ -246,4 +246,35 @@ public class ReimbursementDAO {
 		}
 		return null;
 	}
+	
+	public boolean removeReimbursement(Reimbursement r) {
+		String sql = "DELETE FROM reimbursements WHERE reimbursement_id = ?;";
+		try {
+			CallableStatement cs = conn.prepareCall(sql);
+			cs.setInt(1, r.getId());
+			cs.execute();
+			cs.close();
+			return true;
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean changeFullApprove(Reimbursement r) {
+		String sql = "UPDATE reimbursements SET full_approve = true " + 
+					 "WHERE reimbursement_id = ?;";
+		try {
+			CallableStatement cs = conn.prepareCall(sql);
+			cs.setInt(1, r.getId());
+			cs.execute();
+			cs.close();
+			return true;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

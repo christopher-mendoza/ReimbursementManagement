@@ -54,6 +54,8 @@ const getReimbursements = () => {
                 'Benefits Coordinator Approved',
                 'Department Head Approved',
                 'Direct Supervisor Approved',
+                'Proposed Reimbursement',
+                'Benefits Coordinator Set Reimbursement',
                 'Exceed?'
             ]
             // Headers
@@ -122,6 +124,16 @@ const getReimbursements = () => {
                 let dsApprove = document.createElement('td');
                 dsApprove.innerHTML = r.dsApproval.approve;
                 rTableRow.appendChild(dsApprove);
+
+                // Proposed Reimbursement
+                let propReim = document.createElement('td');
+                propReim.innerHTML = '$' + (r.event.eventCost * r.event.eventType.coverage);
+                rTableRow.appendChild(propReim);
+
+                // Benefits Coordinator Set Reimbursement
+                let bcReim = document.createElement('td');
+                bcReim.innerHTML = '$' + r.event.eventProposed;
+                rTableRow.appendChild(bcReim);
 
                 // Exceed
                 let exceed = document.createElement('td');

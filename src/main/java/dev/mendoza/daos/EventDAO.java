@@ -106,7 +106,8 @@ public class EventDAO {
 	
 	public List<Event> getAllEvents() {
 		String sql = "SELECT * FROM events " +
-					"JOIN event_types ON e_type = event_type_id;";
+					"JOIN event_types ON e_type = event_type_id " +
+					"ORDER BY event_id ASC;";
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();

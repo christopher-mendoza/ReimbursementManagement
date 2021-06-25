@@ -118,6 +118,7 @@ public class FrontControllerServlet extends HttpServlet {
 			// Admin Main
 			case "/ReimbursementManagement/adminmain": {
 				System.out.println("Inside Admin Main.");
+				u = us.getUserByUsername(u.getUsername());
 				l = rs.getAllReimbursements();
 				// Benefits Coordinator List
 				if(u.getBcAdmin() == true) {
@@ -178,7 +179,6 @@ public class FrontControllerServlet extends HttpServlet {
 				System.out.println("Submitting Direct Supervisor Judgement.");
 				DSSubmit dsSubmit = gson.fromJson(request.getReader(), DSSubmit.class);
 				Reimbursement r = rs.getReimbursementById(dsSubmit.id);
-				System.out.println(r.getDsApproval().getId());
 				DSApproval directSuper = dss.getDSApprovalById(r.getDsApproval().getId());
 				// Submitted Reject
 				if(dsSubmit.judgement.equals("1")) {
@@ -278,6 +278,7 @@ public class FrontControllerServlet extends HttpServlet {
 			// User Main
 			case "/ReimbursementManagement/usermain": {
 				System.out.println("Inside User Main.");
+				u = us.getUserByUsername(u.getUsername());
 				l = rs.getAllReimbursements();
 				for(int i = 0; i < l.size(); i++) {
 					if(!l.get(i).getUsername().equals(u.getUsername())) {
@@ -312,6 +313,7 @@ public class FrontControllerServlet extends HttpServlet {
 				r.setUsername(u.getUsername());
 				r.setWorkJust(ra.workJust);
 				r.setMissedWork(ra.missedWork);
+				r.setFullApprove(false);
 				// Create Event
 				Event e = new Event();
 				e.setEventDate(ra.date);
@@ -320,6 +322,7 @@ public class FrontControllerServlet extends HttpServlet {
 				e.setEventCost(ra.cost);
 				// Create EventType
 				EventType et = es.getEventTypeByEventType(ra.eventType);
+				e.setEventProposed(ra.cost * et.getCoverage());
 				e.setEventType(et);
 				es.addEvent(e);
 				List<Event> eList = es.getAllEvents();
@@ -404,9 +407,6 @@ public class FrontControllerServlet extends HttpServlet {
 				UserUpload uUpload = gson.fromJson(request.getReader(), UserUpload.class);
 				Reimbursement r = rs.getReimbursementById(uUpload.id);
 				GradeUpload gu = gus.getGradeUploadById(r.getgUp().getId());
-				System.out.println("grade: "  + uUpload.grade);
-				System.out.println("passfail: " + uUpload.passfail);
-				System.out.println("id: " + uUpload.id);
 				if(r.getGradingFormat().getgFormatName().equals("Letter Grading")) {
 					switch(uUpload.grade) {
 						// A
@@ -466,8 +466,16 @@ public class FrontControllerServlet extends HttpServlet {
 				System.out.println("Submitting User Verdict.");
 				UserVerdict userV = gson.fromJson(request.getReader(), UserVerdict.class);
 				Reimbursement r = rs.getReimbursementById(userV.id);
-				System.out.println(userV.id);
-				System.out.println(userV.judgement);
+				// Cancel
+				if(userV.judgement.equals("1")) {
+					System.out.print("Removing reimbursement: " + userV.id);
+					rs.removeReimbursement(r);
+				}
+				// Confirm!
+				else {
+					us.changeReimbursementAmt(u, es.getEventById(r.getEvent().getId()).getEventProposed());
+					rs.changeFullApprove(r);
+				}
 				response.getWriter().append("user.html");
 				break;
 			}
@@ -478,7 +486,7 @@ public class FrontControllerServlet extends HttpServlet {
 				LoginAttempt login = gson.fromJson(request.getReader(), LoginAttempt.class);
 				u = us.getUserByUsername(login.un);
 				if(u == null) {
-					System.out.println("Failed admin login attempt.");
+					System.out.println("Failed login attempt.");
 					break;
 				}
 				if(u.getUsername().equals(login.un) && u.getPassword().equals(login.pw)) {
@@ -494,7 +502,7 @@ public class FrontControllerServlet extends HttpServlet {
 					}
 				}
 				else {
-					System.out.println("Failed admin login attempt.");
+					System.out.println("Failed login attempt.");
 					session.invalidate();
 				}
 				break;

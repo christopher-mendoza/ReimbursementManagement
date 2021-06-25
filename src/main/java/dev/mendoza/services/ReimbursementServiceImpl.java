@@ -24,4 +24,14 @@ public class ReimbursementServiceImpl implements ReimbursementService {
 		return rdao.getAllReimbursements();
 	}
 
+	@Override
+	public boolean removeReimbursement(Reimbursement r) {
+		return rdao.removeReimbursement(r);
+	}
+
+	@Override
+	public boolean changeFullApprove(Reimbursement r) {
+		return rdao.changeFullApprove(r);
+	}
+
 }
