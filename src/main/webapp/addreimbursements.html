@@ -5,9 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Reimbursements</title>
+            <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="homestyles.css"> 
 </head>
 <body>
-    <h2>Welcome to Reimbursement Application Page!</h2>
+    <h2><b>Welcome to Reimbursement Application Page!</b></h2>
     <div>
         Event Date:        <input type="date" id="eventDate"/><br>
         Event Location:    <input type="text" id="eventLocation"/><br>
@@ -31,8 +40,8 @@
         Work Justification:<input type="text" id="workJust"/><br>
     </div>
     <div id="btnholder">
-        <button type="button" id="backbtn">Cancel</button>
-        <button type="button" id="submitbtn">Submit Reimbursement Application</button>
+        <button class="btn-dark" type="button" id="backbtn">Cancel</button>
+        <button class="btn-dark" type="button" id="submitbtn">Submit Reimbursement Application</button>
     </div>
     <script src="addreimbursements.js"></script>
 </body>

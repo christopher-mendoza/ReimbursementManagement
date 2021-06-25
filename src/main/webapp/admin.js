@@ -35,7 +35,11 @@ const getReimbursements = () => {
             var count = 1;
             // get reimbursements
             let rTable = document.createElement('table');
+            rTable.classList.add("table");
+            rTable.classList.add("table-bordered");
             let rTableRow = document.createElement('tr');
+            rTableRow.classList.add("table");
+            rTableRow.classList.add("table-bordered");
             let rTableHeaders = [ 
                 '#',
                 'Name',

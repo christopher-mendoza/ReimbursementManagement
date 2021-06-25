@@ -473,7 +473,7 @@ public class FrontControllerServlet extends HttpServlet {
 				}
 				// Confirm!
 				else {
-					us.changeReimbursementAmt(u, es.getEventById(r.getEvent().getId()).getEventProposed());
+					us.changeReimbursementAmt(u, u.getReAmount() + es.getEventById(r.getEvent().getId()).getEventProposed());
 					rs.changeFullApprove(r);
 				}
 				response.getWriter().append("user.html");

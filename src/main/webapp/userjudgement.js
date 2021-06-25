@@ -51,7 +51,11 @@ function showReimbursement() {
     if(dropDown.selectedIndex != 0) {
         submitbtn.hidden = false;
         let rTable = document.createElement('table');
+        rTable.classList.add("table");
+        rTable.classList.add("table-bordered");
         let rTableRow = document.createElement('tr');
+        rTableRow.classList.add("table");
+        rTableRow.classList.add("table-bordered");
         let rTableHeaders = [ 
             '#',
             'Event Date',

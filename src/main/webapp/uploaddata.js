@@ -54,7 +54,11 @@ function showReimbursement() {
     if(dropDown.selectedIndex != 0) {
         uploadbtn.hidden = false;
         let rTable = document.createElement('table');
+        rTable.classList.add("table");
+        rTable.classList.add("table-bordered");
         let rTableRow = document.createElement('tr');
+        rTableRow.classList.add("table");
+        rTableRow.classList.add("table-bordered");
         let rTableHeaders = [
             '#',
             'Event Date',
@@ -145,9 +149,11 @@ function showReimbursement() {
         userformDiv.hidden = false;
         if(list.gradingFormat.gFormatName == 'Letter Grading') {
             gradeDiv.hidden = false;
+            passfailDiv.hidden = true;
         }
         else {
             passfailDiv.hidden = false;
+            gradeDiv.hidden = true;
         }
     }
     else {

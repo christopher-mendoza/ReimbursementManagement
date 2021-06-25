@@ -40,7 +40,11 @@ const getReimbursements = () => {
 
             // get reimbursements
             let rTable = document.createElement('table');
+            rTable.classList.add("table");
+            rTable.classList.add("table-bordered");
             let rTableRow = document.createElement('tr');
+            rTableRow.classList.add("table");
+            rTableRow.classList.add("table-bordered");
             let rTableHeaders = [ 
                 '#',
                 'Event Date',
@@ -51,9 +55,9 @@ const getReimbursements = () => {
 //                'Work Justification',
                 'Grade Format',
                 'Grade Upload',
-                'Benefits Coordinator Approved',
-                'Department Head Approved',
-                'Direct Supervisor Approved',
+                'BC Approved',
+                'DH Approved',
+                'DS Approved',
                 'Proposed Reimbursement',
                 'Benefits Coordinator Set Reimbursement',
                 'Exceed?'

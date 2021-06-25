@@ -5,9 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Upload Data</title>
+            <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="homestyles.css"> 
 </head>
 <body>
-    <h2>Welcome to the User Upload Page!</h2>
+    <h2><b>Welcome to the User Upload Page!</b></h2>
     <div id="dropdownDiv">
         <select id='dropDown' onchange="showReimbursement()">
             <option value=0>--</option>
@@ -37,8 +46,8 @@
         
     </div>
     <div id="btnholder">
-        <button type="button" id="backbtn">Go Back</button>
-        <button type="button" id="uploadbtn" hidden>Upload</button>
+        <button class="btn-dark" type="button" id="backbtn">Go Back</button>
+        <button class="btn-dark" type="button" id="uploadbtn" hidden>Upload</button>
     </div>
     <script src="uploaddata.js"></script>
 </body>
